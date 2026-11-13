@@ -1,0 +1,2495 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Little World for Araika — 13.03.2026</title>
+
+  <!-- Google Fonts: Cormorant Garamond, Plus Jakarta Sans, Lora, Caveat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            roseBg: '#FFF8FA',
+            roseLight: '#F8DCE7',
+            roseSoft: '#E9B4C8',
+            roseAccent: '#B66C88',
+            roseDark: '#754357',
+            roseDeep: '#562E3E',
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            body: ['"Lora"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            hand: ['"Caveat"', 'cursive'],
+          },
+          boxShadow: {
+            soft: '0 20px 50px -15px rgba(182, 108, 136, 0.16)',
+            polaroid: '0 14px 32px -8px rgba(117, 67, 87, 0.14), 0 4px 10px -2px rgba(117, 67, 87, 0.06)',
+            glass: '0 8px 32px 0 rgba(182, 108, 136, 0.12)',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+      --bg-main: #FFF8FA;
+      --pink-light: #F8DCE7;
+      --pink-accent: #E9B4C8;
+      --accent-primary: #B66C88;
+      --text-dark: #754357;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 12% 18%, rgba(248, 220, 231, 0.55) 0%, transparent 42%),
+        radial-gradient(circle at 88% 35%, rgba(233, 180, 200, 0.28) 0%, transparent 45%),
+        radial-gradient(circle at 25% 78%, rgba(248, 220, 231, 0.45) 0%, transparent 50%);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FFF8FA;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E9B4C8;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #B66C88;
+    }
+
+    /* Glassmorphism Panels */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.68);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(233, 180, 200, 0.45);
+      box-shadow: 0 12px 36px -10px rgba(182, 108, 136, 0.14);
+    }
+
+    .glass-pill {
+      background: rgba(255, 248, 250, 0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(233, 180, 200, 0.55);
+    }
+
+    /* Entrance Fade Animations */
+    @keyframes fadeUpSoft {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-up {
+      opacity: 0;
+      animation: fadeUpSoft 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .delay-100 { animation-delay: 0.12s; }
+    .delay-200 { animation-delay: 0.24s; }
+    .delay-300 { animation-delay: 0.36s; }
+    .delay-400 { animation-delay: 0.48s; }
+
+    /* Envelope 3D Styling */
+    .envelope-wrapper {
+      perspective: 1200px;
+    }
+
+    .envelope-card {
+      position: relative;
+      background: linear-gradient(145deg, #FFFDFD 0%, #FCEBF2 100%);
+      border: 1px solid rgba(233, 180, 200, 0.7);
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
+    }
+
+    .envelope-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 45px -12px rgba(182, 108, 136, 0.25);
+    }
+
+    .envelope-flap {
+      transform-origin: top center;
+      transition: transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
+      backface-visibility: hidden;
+    }
+
+    .envelope-card.is-opening .envelope-flap {
+      transform: rotateX(180deg);
+    }
+
+    .wax-seal {
+      background: radial-gradient(circle at 30% 30%, #CC839F, #9E526F);
+      box-shadow: 0 6px 14px rgba(117, 67, 87, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.45);
+      transition: transform 0.35s ease, opacity 0.35s ease;
+    }
+
+    .envelope-card:hover .wax-seal {
+      transform: scale(1.08);
+    }
+
+    /* Polaroid Tilt & Hover */
+    .polaroid-item {
+      background: #FFFFFF;
+      padding: 12px 12px 20px 12px;
+      border: 1px solid rgba(233, 180, 200, 0.45);
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+    }
+    .polaroid-item:nth-child(odd) {
+      transform: rotate(-1.1deg);
+    }
+    .polaroid-item:nth-child(even) {
+      transform: rotate(1.1deg);
+    }
+    .polaroid-item:hover {
+      transform: rotate(0deg) translateY(-6px) scale(1.015);
+      box-shadow: 0 24px 48px -12px rgba(117, 67, 87, 0.22);
+      z-index: 10;
+    }
+
+    /* Letter Paper Texture */
+    .letter-paper {
+      background-color: #FFFDFB;
+      background-image: linear-gradient(rgba(233, 180, 200, 0.2) 1px, transparent 1px);
+      background-size: 100% 2.1rem;
+      line-height: 2.1rem;
+    }
+
+    /* Subtle Pulse for Secret Heart */
+    @keyframes gentleBeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.18); }
+    }
+    .heart-beat {
+      animation: gentleBeat 2.8s ease-in-out infinite;
+    }
+
+    /* Modal Backdrop Animation */
+    .modal-backdrop {
+      animation: fadeInBackdrop 0.28s ease forwards;
+    }
+    @keyframes fadeInBackdrop {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-roseSoft selection:text-roseDeep relative min-h-screen">
+
+  <!-- Ambient Falling Petals Canvas -->
+  <canvas id="petalsCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Toast Notification -->
+  <div id="toastBox" class="fixed top-20 left-1/2 -translate-x-1/2 z-[120] pointer-events-none transition-all duration-300 opacity-0 -translate-y-3">
+    <div class="glass-pill px-5 py-2.5 rounded-full shadow-soft flex items-center gap-2.5 text-sm font-medium text-roseDark">
+      <i data-lucide="sparkles" class="w-4 h-4 text-roseAccent"></i>
+      <span id="toastText">Сохранено с любовью</span>
+    </div>
+  </div>
+
+  <!-- 0. LOADING SCREEN (while data loads from the cloud) -->
+  <div id="loadingOverlay" class="fixed inset-0 z-[130] flex items-center justify-center bg-roseBg">
+    <div class="text-center">
+      <div class="w-12 h-12 rounded-full bg-roseLight flex items-center justify-center mx-auto mb-4 text-roseAccent heart-beat">
+        <i data-lucide="heart" class="w-5 h-5 fill-current"></i>
+      </div>
+      <p class="font-serif italic text-xl text-roseDark">Открываем наш маленький мир…</p>
+    </div>
+  </div>
+
+  <!-- 1. PRIVACY LOCK SCREEN (Optional, if enabled in settings) -->
+  <div id="privacyLockOverlay" class="fixed inset-0 z-[110] hidden items-center justify-center p-4 bg-roseBg/95 backdrop-blur-xl">
+    <div class="glass-card max-w-md w-full rounded-3xl p-8 text-center shadow-soft">
+      <div class="w-14 h-14 rounded-full bg-roseLight/80 flex items-center justify-center mx-auto mb-5 text-roseAccent">
+        <i data-lucide="lock" class="w-6 h-6"></i>
+      </div>
+      <p class="font-serif italic text-roseAccent text-lg mb-1">Private Space</p>
+      <h2 class="font-serif text-3xl font-semibold text-roseDark mb-3">A Little World for Araika</h2>
+      <p class="text-sm text-roseDark/75 mb-6 leading-relaxed">
+        Это наше личное пространство. Введи секретный пароль, чтобы открыть наши воспоминания.
+      </p>
+      <form id="privacyUnlockForm" class="space-y-4">
+        <input
+          type="password"
+          id="privacyPasswordInput"
+          placeholder="Введи пароль..."
+          class="w-full px-4 py-3 rounded-2xl bg-white/80 border border-roseSoft text-center text-roseDark focus:outline-none focus:border-roseAccent"
+        />
+        <p id="privacyErrorMsg" class="text-xs text-rose-600 hidden">Неверный пароль. Попробуй ещё раз.</p>
+        <button type="submit" class="w-full py-3 rounded-2xl bg-roseAccent hover:bg-roseDark text-white font-medium transition shadow-soft">
+          Войти в наш мир
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. FIRST-VISIT WELCOME ENVELOPE OVERLAY -->
+  <div id="welcomeEnvelopeOverlay" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-roseBg/90 backdrop-blur-md">
+    <div class="max-w-lg w-full text-center">
+      <div id="welcomeEnvelopeBox" class="envelope-card rounded-3xl p-8 sm:p-10 shadow-soft relative overflow-hidden">
+        <!-- Decorative Top Flap Visual -->
+        <div class="w-full h-2 bg-gradient-to-r from-roseLight via-roseAccent to-roseLight absolute top-0 left-0"></div>
+
+        <div class="w-14 h-14 wax-seal rounded-full flex items-center justify-center mx-auto mb-6 text-white">
+          <i data-lucide="heart" class="w-6 h-6 fill-current"></i>
+        </div>
+
+        <p class="font-serif italic text-roseAccent text-lg mb-2">13.03.2026 • Для Арайки</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-roseDark mb-5">
+          A little world, made just for you.
+        </h2>
+
+        <div class="bg-white/75 rounded-2xl p-6 border border-roseSoft/50 mb-7">
+          <p class="font-body italic text-base sm:text-lg text-roseDark leading-relaxed">
+            «Для самой дорогой девушки в моей жизни. Я создал это маленькое место, чтобы сохранить всё прекрасное, что связано с нами.»
+          </p>
+          <p class="font-hand text-2xl text-roseAccent mt-3 text-right">— С любовью, Темирлан</p>
+        </div>
+
+        <button
+          id="openWorldBtn"
+          class="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full bg-roseAccent hover:bg-roseDark text-white font-medium transition-all duration-300 shadow-soft hover:scale-[1.02]"
+        >
+          <span>Открыть наш мир</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION HEADER -->
+  <header class="sticky top-0 z-40 px-4 sm:px-6 pt-3 pb-2">
+    <nav class="max-w-6xl mx-auto glass-pill rounded-full px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-sm">
+      <a href="#top" class="flex items-center gap-2 group">
+        <span class="w-7 h-7 rounded-full bg-roseLight flex items-center justify-center text-roseAccent group-hover:bg-roseAccent group-hover:text-white transition">
+          <i data-lucide="flower-2" class="w-4 h-4"></i>
+        </span>
+        <span class="font-serif font-semibold text-lg sm:text-xl tracking-wide text-roseDark">
+          A &amp; T
+        </span>
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium text-roseDark/80">
+        <a href="#our-time" class="hover:text-roseAccent transition">Our Time</a>
+        <a href="#memories" class="hover:text-roseAccent transition">Our Memories</a>
+        <a href="#story" class="hover:text-roseAccent transition">Our Story</a>
+        <a href="#reminders" class="hover:text-roseAccent transition">Reminders</a>
+        <a href="#letters" class="hover:text-roseAccent transition">Letters for You</a>
+        <a href="#future" class="hover:text-roseAccent transition">Our Future</a>
+      </div>
+
+      <!-- Right Controls: Edit Mode & Settings -->
+      <div class="flex items-center gap-2">
+        <button
+          id="replayEnvelopeBtn"
+          title="Открыть приветственное письмо"
+          class="p-2 rounded-full text-roseDark/70 hover:text-roseAccent hover:bg-roseLight/60 transition"
+        >
+          <i data-lucide="mail-open" class="w-4 h-4"></i>
+        </button>
+
+        <span
+          id="syncStatus"
+          title="Статус синхронизации"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-roseSoft/80 bg-white/70 text-roseDark"
+        >
+          <span id="syncDot" class="w-2 h-2 rounded-full bg-amber-400"></span>
+          <span id="syncLabel" class="hidden sm:inline">Загрузка…</span>
+        </span>
+
+        <button
+          id="openSettingsBtn"
+          title="Настройки и резервная копия"
+          class="p-2 rounded-full text-roseDark/70 hover:text-roseAccent hover:bg-roseLight/60 transition"
+        >
+          <i data-lucide="settings" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Quick Scroll Bar -->
+    <div class="flex md:hidden items-center justify-center gap-3 mt-2 overflow-x-auto py-1 px-2 text-xs font-medium text-roseDark/80">
+      <a href="#our-time" class="glass-pill px-3 py-1 rounded-full whitespace-nowrap">Our Time</a>
+      <a href="#memories" class="glass-pill px-3 py-1 rounded-full whitespace-nowrap">Memories</a>
+      <a href="#story" class="glass-pill px-3 py-1 rounded-full whitespace-nowrap">Story</a>
+      <a href="#reminders" class="glass-pill px-3 py-1 rounded-full whitespace-nowrap">Reminders</a>
+      <a href="#letters" class="glass-pill px-3 py-1 rounded-full whitespace-nowrap">Letters</a>
+      <a href="#future" class="glass-pill px-3 py-1 rounded-full whitespace-nowrap">Future</a>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main id="top" class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pb-32">
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="pt-8 sm:pt-14 pb-16 sm:pb-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <!-- Left Typography -->
+        <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+          <div class="animate-fade-up inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-roseLight/70 border border-roseSoft/60 text-xs sm:text-sm font-medium text-roseDark">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-roseAccent"></i>
+            <span>13.03.2026 • Арайка &amp; Темирлан</span>
+          </div>
+
+          <h1 class="animate-fade-up delay-100 font-serif text-5xl sm:text-6xl lg:text-7xl font-semibold text-roseDark leading-[1.08] tracking-tight">
+            A Little World <br />
+            <span class="italic font-normal text-roseAccent">for Araika</span>
+          </h1>
+
+          <p class="animate-fade-up delay-200 font-serif italic text-2xl sm:text-3xl text-roseDark/85">
+            “A little world, made just for you.”
+          </p>
+
+          <p class="animate-fade-up delay-300 font-body text-sm sm:text-base text-roseDark/75 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            Уютный уголок в сети, где хранятся наши тёплые моменты, письма, которые можно открыть в любую минуту, и мечты, к которым мы идём вместе.
+          </p>
+
+          <div class="animate-fade-up delay-400 flex flex-wrap items-center justify-center lg:justify-start gap-3.5 pt-2">
+            <a
+              href="#memories"
+              class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-roseAccent hover:bg-roseDark text-white font-medium text-sm sm:text-base transition-all shadow-soft hover:-translate-y-0.5"
+            >
+              <span>К нашим воспоминаниям</span>
+              <i data-lucide="heart" class="w-4 h-4"></i>
+            </a>
+
+            <button
+              id="heroMissMeBtn"
+              class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full glass-card hover:bg-roseLight/60 text-roseDark font-medium text-sm sm:text-base transition-all hover:-translate-y-0.5"
+            >
+              <i data-lucide="message-circle-heart" class="w-4 h-4 text-roseAccent"></i>
+              <span>If you miss me</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Main Photo Frame -->
+        <div class="lg:col-span-5 animate-fade-up delay-200">
+          <div class="relative max-w-md mx-auto">
+            <!-- Decorative soft backdrop card -->
+            <div class="absolute -inset-3 rounded-[2rem] bg-gradient-to-tr from-roseLight via-roseSoft/40 to-white rotate-2 -z-10"></div>
+
+            <div class="glass-card rounded-[1.85rem] p-4 sm:p-5 shadow-soft">
+              <div id="heroPhotoContainer" class="relative aspect-[4/5] rounded-2xl overflow-hidden bg-roseLight/45 border border-roseSoft/50 flex flex-col items-center justify-center text-center group">
+                <!-- Populated by JS -->
+              </div>
+
+              <div class="pt-4 pb-1 px-2 flex items-center justify-between">
+                <div>
+                  <p class="font-serif text-lg font-semibold text-roseDark">Арайка &amp; Темирлан</p>
+                  <p id="heroCaptionText" class="font-hand text-xl text-roseAccent">Наше любимое фото • 13.03.2026</p>
+                </div>
+                <label
+                  for="heroPhotoInput"
+                  class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-roseLight/80 hover:bg-roseAccent hover:text-white text-roseDark text-xs font-medium transition"
+                  title="Загрузить наше главное фото"
+                >
+                  <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+                  <span>Фото</span>
+                </label>
+                <input type="file" id="heroPhotoInput" accept="image/*" class="hidden" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== OUR TIME & RANDOM MEMORY ==================== -->
+    <section id="our-time" class="py-14 sm:py-20">
+      <div class="glass-card rounded-[2.2rem] p-6 sm:p-10 lg:p-12 relative overflow-hidden">
+        <!-- Subtle corner floral ornament -->
+        <div class="absolute -top-10 -right-10 w-44 h-44 rounded-full bg-roseLight/50 blur-2xl pointer-events-none"></div>
+
+        <div class="text-center max-w-2xl mx-auto mb-10">
+          <p class="font-serif italic text-roseAccent text-lg mb-1">Since March 13, 2026</p>
+          <h2 class="font-serif text-3xl sm:text-5xl font-semibold text-roseDark">Our Time Together</h2>
+        </div>
+
+        <!-- Live Counter Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 sm:gap-6 max-w-3xl mx-auto mb-8">
+          <div class="bg-white/80 border border-roseSoft/60 rounded-2xl p-5 text-center shadow-sm">
+            <div id="timeDays" class="font-serif text-4xl sm:text-5xl font-bold text-roseDark">0</div>
+            <div class="text-xs uppercase tracking-widest text-roseAccent mt-1.5 font-medium">Дней</div>
+          </div>
+          <div class="bg-white/80 border border-roseSoft/60 rounded-2xl p-5 text-center shadow-sm">
+            <div id="timeHours" class="font-serif text-4xl sm:text-5xl font-bold text-roseDark">00</div>
+            <div class="text-xs uppercase tracking-widest text-roseAccent mt-1.5 font-medium">Часов</div>
+          </div>
+          <div class="bg-white/80 border border-roseSoft/60 rounded-2xl p-5 text-center shadow-sm">
+            <div id="timeMinutes" class="font-serif text-4xl sm:text-5xl font-bold text-roseDark">00</div>
+            <div class="text-xs uppercase tracking-widest text-roseAccent mt-1.5 font-medium">Минут</div>
+          </div>
+          <div class="bg-white/80 border border-roseSoft/60 rounded-2xl p-5 text-center shadow-sm">
+            <div id="timeSeconds" class="font-serif text-4xl sm:text-5xl font-bold text-roseAccent">00</div>
+            <div class="text-xs uppercase tracking-widest text-roseAccent mt-1.5 font-medium">Секунд</div>
+          </div>
+        </div>
+
+        <p class="font-serif italic text-xl sm:text-2xl text-center text-roseDark/90 mb-10">
+          “And every second, I choose you again.”
+        </p>
+
+        <!-- Bottom Interactive Strip: Random Memory & If You Miss Me -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-6 border-t border-roseSoft/40">
+          <!-- Random Memory Card -->
+          <div class="bg-white/75 rounded-2xl p-5 sm:p-6 border border-roseSoft/50 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-roseAccent">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                  Случайное воспоминание
+                </span>
+                <button id="refreshRandomMemoryBtn" class="text-xs text-roseDark/60 hover:text-roseAccent flex items-center gap-1 transition">
+                  <i data-lucide="refresh-cw" class="w-3 h-3"></i>
+                  <span>Другое</span>
+                </button>
+              </div>
+              <p id="randomMemoryContent" class="font-body text-sm sm:text-base text-roseDark/85 leading-relaxed">
+                13 марта 2026 года — день, с которого началась наша общая глава. Добавляй новые моменты в галерею, и они будут появляться здесь каждый раз при входе.
+              </p>
+            </div>
+            <p id="randomMemoryDate" class="font-hand text-lg text-roseAccent mt-3">13.03.2026</p>
+          </div>
+
+          <!-- If You Miss Me Interactive Card -->
+          <div class="bg-gradient-to-br from-roseLight/65 to-white/85 rounded-2xl p-5 sm:p-6 border border-roseSoft/60 flex flex-col justify-between items-start">
+            <div>
+              <span class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-roseAccent mb-2">
+                <i data-lucide="heart-handshake" class="w-3.5 h-3.5"></i>
+                Когда меня нет рядом
+              </span>
+              <h3 class="font-serif text-2xl font-semibold text-roseDark mb-1.5">If you miss me...</h3>
+              <p class="text-sm text-roseDark/75 leading-relaxed mb-4">
+                Нажми на кнопку, если соскучилась — здесь спрятаны тёплые слова, которые я оставил специально для тебя.
+              </p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2.5 w-full">
+              <button
+                id="sectionMissMeBtn"
+                class="px-5 py-2.5 rounded-full bg-roseAccent hover:bg-roseDark text-white text-sm font-medium transition shadow-sm inline-flex items-center gap-2"
+              >
+                <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                <span>Получить послание</span>
+              </button>
+              <button
+                id="addMissMeNoteBtn"
+                class="px-4 py-2.5 rounded-full bg-white/90 hover:bg-roseLight text-roseDark border border-roseSoft text-xs font-medium transition"
+              >
+                + Добавить фразу
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== OUR MEMORIES (POLAROID GALLERY) ==================== -->
+    <section id="memories" class="py-14 sm:py-20">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <div>
+          <p class="font-serif italic text-roseAccent text-lg mb-1">Captured Moments</p>
+          <h2 class="font-serif text-4xl sm:text-5xl font-semibold text-roseDark">Our Memories</h2>
+          <p class="text-sm sm:text-base text-roseDark/75 mt-2 max-w-xl">
+            Наши фотографии, маленькие истории за каждым кадром и моменты, которые хочется пересматривать снова и снова.
+          </p>
+        </div>
+
+        <button
+          id="openAddMemoryModalBtn"
+          class="self-start md:self-auto inline-flex items-center gap-2 px-6 py-3 rounded-full bg-roseAccent hover:bg-roseDark text-white text-sm font-medium transition shadow-soft"
+        >
+          <i data-lucide="plus" class="w-4 h-4"></i>
+          <span>Добавить воспоминание</span>
+        </button>
+      </div>
+
+      <!-- Album Filter Pills -->
+      <div id="albumFilters" class="flex flex-wrap items-center gap-2 mb-8">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Polaroid Grid -->
+      <div id="memoriesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 sm:gap-8">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ==================== OUR STORY (TIMELINE DIARY) ==================== -->
+    <section id="story" class="py-14 sm:py-20">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+          <p class="font-serif italic text-roseAccent text-lg mb-1">Chapter by Chapter</p>
+          <h2 class="font-serif text-4xl sm:text-5xl font-semibold text-roseDark">Our Story</h2>
+          <p class="text-sm sm:text-base text-roseDark/75 mt-2 max-w-xl">
+            Наш личный дневник. Всё началось 13 марта 2026 года, и каждая новая страница пишется нами вместе.
+          </p>
+        </div>
+
+        <button
+          id="openAddStoryModalBtn"
+          class="self-start md:self-auto inline-flex items-center gap-2 px-6 py-3 rounded-full glass-card hover:bg-roseLight/70 text-roseDark text-sm font-medium transition"
+        >
+          <i data-lucide="feather" class="w-4 h-4 text-roseAccent"></i>
+          <span>Добавить событие</span>
+        </button>
+      </div>
+
+      <!-- Vertical Romantic Timeline -->
+      <div class="relative max-w-4xl mx-auto">
+        <!-- Center/Left Line -->
+        <div class="absolute left-5 sm:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-roseSoft via-roseAccent/60 to-roseSoft sm:-translate-x-1/2"></div>
+
+        <div id="storyTimelineContainer" class="space-y-10">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== REMINDERS ==================== -->
+    <section id="reminders" class="py-14 sm:py-20">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <div>
+          <p class="font-serif italic text-roseAccent text-lg mb-1">Don't Forget</p>
+          <h2 class="font-serif text-4xl sm:text-5xl font-semibold text-roseDark">Our Reminders</h2>
+          <p class="text-sm sm:text-base text-roseDark/75 mt-2 max-w-xl">
+            Важные даты, планы и маленькие напоминалки. Всё, что здесь добавишь, увидим мы оба.
+          </p>
+        </div>
+
+        <button
+          id="openAddReminderModalBtn"
+          class="self-start md:self-auto inline-flex items-center gap-2 px-6 py-3 rounded-full bg-roseAccent hover:bg-roseDark text-white text-sm font-medium transition shadow-soft"
+        >
+          <i data-lucide="bell-plus" class="w-4 h-4"></i>
+          <span>Добавить напоминалку</span>
+        </button>
+      </div>
+
+      <div id="remindersList" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ==================== LETTERS FOR YOU (INTERACTIVE ENVELOPES) ==================== -->
+    <section id="letters" class="py-14 sm:py-20">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <p class="font-serif italic text-roseAccent text-lg mb-1">Open When...</p>
+        <h2 class="font-serif text-4xl sm:text-5xl font-semibold text-roseDark mb-3">Letters for You</h2>
+        <p class="text-sm sm:text-base text-roseDark/75 leading-relaxed">
+          Шесть конвертов для разных настроений и моментов. Нажми на любой, чтобы сломать сургучную печать и прочитать письмо.
+        </p>
+      </div>
+
+      <div id="lettersGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ==================== OUR FUTURE (BUCKET LIST & PROGRESS) ==================== -->
+    <section id="future" class="py-14 sm:py-20">
+      <div class="glass-card rounded-[2.2rem] p-6 sm:p-10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+          <div>
+            <p class="font-serif italic text-roseAccent text-lg mb-1">Dreams &amp; Plans</p>
+            <h2 class="font-serif text-4xl sm:text-5xl font-semibold text-roseDark">Our Future</h2>
+            <p class="text-sm sm:text-base text-roseDark/75 mt-2">
+              Места, куда мы поедем, свидания, которые устроим, и мечты, которые обязательно сбудутся.
+            </p>
+          </div>
+
+          <button
+            id="openAddDreamModalBtn"
+            class="self-start md:self-auto inline-flex items-center gap-2 px-6 py-3 rounded-full bg-roseAccent hover:bg-roseDark text-white text-sm font-medium transition shadow-soft"
+          >
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            <span>Добавить мечту</span>
+          </button>
+        </div>
+
+        <!-- Visual Progress Bar -->
+        <div class="bg-white/80 rounded-2xl p-5 border border-roseSoft/50 mb-8">
+          <div class="flex items-center justify-between text-sm font-medium mb-2.5">
+            <span class="text-roseDark">Исполнено совместных мечтаний</span>
+            <span id="futureProgressText" class="text-roseAccent font-semibold">0 из 0 (0%)</span>
+          </div>
+          <div class="w-full h-3 bg-roseLight/70 rounded-full overflow-hidden">
+            <div
+              id="futureProgressBar"
+              class="h-full bg-gradient-to-r from-roseSoft via-roseAccent to-roseDark rounded-full transition-all duration-700"
+              style="width: 0%"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Category Tabs -->
+        <div id="dreamCategoryTabs" class="flex flex-wrap items-center gap-2 mb-7">
+          <!-- Rendered by JS -->
+        </div>
+
+        <!-- Dreams List -->
+        <div id="dreamsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER WITH SECRET HEART ==================== -->
+  <footer class="relative z-10 border-t border-roseSoft/40 bg-white/50 backdrop-blur-sm py-10 pb-28 px-4 text-center">
+    <p class="font-serif italic text-xl text-roseDark mb-1">A Little World for Araika</p>
+    <p class="text-xs text-roseDark/65 mb-4">Создано Темирланом с любовью • Начало: 13 марта 2026</p>
+
+    <!-- Secret Surprise Heart Button -->
+    <button
+      id="secretHeartBtn"
+      title="Маленький секрет..."
+      class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-roseLight/60 hover:bg-roseLight text-roseAccent transition heart-beat"
+      aria-label="Открыть секретный сюрприз"
+    >
+      <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+    </button>
+  </footer>
+
+  <!-- ==================== FLOATING ROMANTIC MUSIC PLAYER ==================== -->
+  <div class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:w-96 z-40">
+    <div class="glass-pill rounded-2xl p-3.5 shadow-soft border border-roseSoft/80">
+      <div class="flex items-center gap-3">
+        <!-- Album Disc Cover -->
+        <div id="playerDisc" class="w-11 h-11 rounded-xl bg-gradient-to-br from-roseLight via-roseSoft to-roseAccent flex items-center justify-center text-white shrink-0 shadow-sm">
+          <i data-lucide="music" class="w-5 h-5"></i>
+        </div>
+
+        <!-- Track Info & Progress -->
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center justify-between gap-2">
+            <p id="trackTitleDisplay" class="text-xs sm:text-sm font-semibold text-roseDark truncate">
+              Tenderness (Piano Melody)
+            </p>
+            <label
+              for="customAudioInput"
+              title="Загрузить свою песню (MP3/WAV)"
+              class="cursor-pointer text-[11px] px-2 py-0.5 rounded-full bg-roseLight/80 hover:bg-roseAccent hover:text-white text-roseDark transition shrink-0"
+            >
+              + Трек
+            </label>
+            <input type="file" id="customAudioInput" accept="audio/*" class="hidden" />
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="mt-2 flex items-center gap-2">
+            <input
+              type="range"
+              id="musicProgress"
+              min="0"
+              max="100"
+              value="0"
+              class="w-full h-1 bg-roseLight rounded-lg appearance-none cursor-pointer accent-[#B66C88]"
+            />
+          </div>
+        </div>
+
+        <!-- Play / Mute Controls -->
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button
+            id="playPauseBtn"
+            class="w-9 h-9 rounded-full bg-roseAccent hover:bg-roseDark text-white flex items-center justify-center transition shadow-sm"
+            aria-label="Play or Pause"
+          >
+            <i id="playPauseIcon" data-lucide="play" class="w-4 h-4 fill-current ml-0.5"></i>
+          </button>
+
+          <button
+            id="muteBtn"
+            class="w-8 h-8 rounded-full hover:bg-roseLight/70 text-roseDark/75 flex items-center justify-center transition"
+            aria-label="Mute or Unmute"
+          >
+            <i id="muteIcon" data-lucide="volume-2" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Volume Slider Row -->
+      <div class="mt-2 pt-2 border-t border-roseSoft/30 flex items-center justify-between gap-3 text-[11px] text-roseDark/65">
+        <span id="audioSourceHint">Встроенная нежная мелодия</span>
+        <div class="flex items-center gap-1.5 w-24">
+          <i data-lucide="volume-1" class="w-3 h-3"></i>
+          <input
+            type="range"
+            id="volumeSlider"
+            min="0"
+            max="1"
+            step="0.05"
+            value="0.5"
+            class="w-full h-1 bg-roseLight rounded-lg appearance-none cursor-pointer accent-[#B66C88]"
+          />
+        </div>
+      </div>
+    </div>
+    <audio id="htmlAudioPlayer" preload="metadata"></audio>
+  </div>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- Modal: "If You Miss Me" Message -->
+  <div id="missMeModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-roseDeep/35 backdrop-blur-sm modal-backdrop">
+    <div class="glass-card bg-white/95 max-w-md w-full rounded-3xl p-7 sm:p-8 text-center shadow-soft relative">
+      <button data-close-modal="missMeModal" class="absolute top-4 right-4 p-2 rounded-full text-roseDark/60 hover:bg-roseLight/60">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+      <div class="w-12 h-12 rounded-full bg-roseLight flex items-center justify-center mx-auto mb-4 text-roseAccent">
+        <i data-lucide="heart" class="w-5 h-5 fill-current"></i>
+      </div>
+      <p class="font-serif italic text-roseAccent text-base mb-2">Для моей Арайки</p>
+      <p id="missMeModalText" class="font-body text-lg text-roseDark leading-relaxed my-4">
+        «Даже если мы сейчас не рядом, я всё равно думаю о тебе.»
+      </p>
+      <div class="flex items-center justify-center gap-3 mt-6">
+        <button id="nextMissMeBtn" class="px-5 py-2.5 rounded-full bg-roseAccent hover:bg-roseDark text-white text-sm font-medium transition">
+          Ещё одно сообщение
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add Memory (Photo + Story) -->
+  <div id="addMemoryModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-roseDeep/35 backdrop-blur-sm modal-backdrop overflow-y-auto">
+    <div class="bg-white max-w-lg w-full rounded-3xl p-6 sm:p-8 shadow-soft border border-roseSoft my-8 relative">
+      <button data-close-modal="addMemoryModal" class="absolute top-4 right-4 p-2 rounded-full text-roseDark/60 hover:bg-roseLight/60">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+      <h3 class="font-serif text-3xl font-semibold text-roseDark mb-1">Новое воспоминание</h3>
+      <p class="text-xs text-roseDark/70 mb-5">Добавь фотографию и небольшую историю о вашем моменте.</p>
+
+      <form id="addMemoryForm" class="space-y-4">
+        <div>
+          <label class="block text-xs font-medium text-roseDark mb-1">Фотография</label>
+          <input type="file" id="memoryPhotoInput" accept="image/*" required class="w-full text-xs text-roseDark file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-roseLight file:text-roseDark hover:file:bg-roseSoft cursor-pointer" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-roseDark mb-1">Альбом</label>
+            <select id="memoryAlbumInput" class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent">
+              <option value="Свидания">Свидания</option>
+              <option value="Путешествия">Путешествия</option>
+              <option value="Маленькие моменты">Маленькие моменты</option>
+              <option value="Особенные дни">Особенные дни</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-roseDark mb-1">Дата</label>
+            <input type="date" id="memoryDateInput" required class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-roseDark mb-1">Короткий заголовок</label>
+          <input type="text" id="memoryTitleInput" placeholder="Наша вечерняя прогулка..." required class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-roseDark mb-1">История этого момента</label>
+          <textarea id="memoryStoryInput" rows="3" placeholder="Напиши, что сделало этот день особенным..." required class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-2xl bg-roseAccent hover:bg-roseDark text-white font-medium text-sm transition shadow-soft">
+          Сохранить в галерею
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Lightbox Fullscreen Memory Viewer -->
+  <div id="lightboxModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-roseDeep/70 backdrop-blur-md modal-backdrop">
+    <div class="bg-white max-w-3xl w-full rounded-3xl overflow-hidden shadow-2xl border border-roseSoft grid grid-cols-1 md:grid-cols-12 relative">
+      <button data-close-modal="lightboxModal" class="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/85 text-roseDark hover:bg-roseLight flex items-center justify-center shadow">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <div class="md:col-span-7 bg-roseBg flex items-center justify-center max-h-[65vh] md:max-h-[80vh] overflow-hidden">
+        <img id="lightboxImg" src="" alt="Memory" class="w-full h-full object-contain" />
+      </div>
+
+      <div class="md:col-span-5 p-6 sm:p-7 flex flex-col justify-between bg-white">
+        <div>
+          <span id="lightboxAlbum" class="inline-block px-3 py-1 rounded-full bg-roseLight/80 text-roseAccent text-xs font-medium mb-3">Альбом</span>
+          <p id="lightboxDate" class="font-hand text-xl text-roseAccent mb-1">Дата</p>
+          <h3 id="lightboxTitle" class="font-serif text-2xl sm:text-3xl font-semibold text-roseDark mb-4">Заголовок</h3>
+          <p id="lightboxStory" class="font-body text-sm sm:text-base text-roseDark/85 leading-relaxed whitespace-pre-line"></p>
+        </div>
+
+        <div class="pt-6 mt-6 border-t border-roseSoft/40 flex items-center justify-between">
+          <span class="font-hand text-lg text-roseDark/60">Арайка &amp; Темирлан</span>
+          <button id="deleteMemoryBtn" class="text-xs text-rose-600 hover:underline flex items-center gap-1">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            <span>Удалить</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add / Edit Story Timeline Event -->
+  <div id="storyModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-roseDeep/35 backdrop-blur-sm modal-backdrop overflow-y-auto">
+    <div class="bg-white max-w-lg w-full rounded-3xl p-6 sm:p-8 shadow-soft border border-roseSoft my-8 relative">
+      <button data-close-modal="storyModal" class="absolute top-4 right-4 p-2 rounded-full text-roseDark/60 hover:bg-roseLight/60">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+      <h3 id="storyModalHeading" class="font-serif text-3xl font-semibold text-roseDark mb-1">Запись в дневнике</h3>
+      <p class="text-xs text-roseDark/70 mb-5">Сохрани важную дату или тёплую деталь вашей истории.</p>
+
+      <form id="storyForm" class="space-y-4">
+        <input type="hidden" id="storyEditId" />
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-roseDark mb-1">Дата</label>
+            <input type="date" id="storyDateInput" required class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-roseDark mb-1">Фото (необязательно)</label>
+            <input type="file" id="storyPhotoInput" accept="image/*" class="w-full text-xs text-roseDark file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:bg-roseLight file:text-roseDark cursor-pointer" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-roseDark mb-1">Название события</label>
+          <input type="text" id="storyTitleInput" placeholder="Начало нашей истории" required class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-roseDark mb-1">Описание</label>
+          <textarea id="storyDescInput" rows="3" placeholder="Как это было..." required class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-roseDark mb-1">Маленькая заметка на полях</label>
+          <input type="text" id="storyNoteInput" placeholder="Твоя улыбка в тот вечер..." class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent" />
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-2xl bg-roseAccent hover:bg-roseDark text-white font-medium text-sm transition shadow-soft">
+          Сохранить в историю
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Read & Edit Letter -->
+  <div id="letterModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-roseDeep/45 backdrop-blur-md modal-backdrop overflow-y-auto">
+    <div class="letter-paper max-w-xl w-full rounded-3xl p-7 sm:p-10 shadow-2xl border border-roseSoft my-8 relative">
+      <button data-close-modal="letterModal" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-roseLight/70 text-roseDark hover:bg-roseSoft flex items-center justify-center">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <div class="flex items-center gap-2 text-roseAccent text-xs uppercase tracking-widest font-semibold mb-2">
+        <i data-lucide="mail-open" class="w-4 h-4"></i>
+        <span>Для Арайки</span>
+      </div>
+
+      <h3 id="letterModalTitle" class="font-serif text-2xl sm:text-3xl font-semibold text-roseDark mb-5 leading-snug">
+        Открой, когда скучаешь
+      </h3>
+
+      <!-- Read View -->
+      <div id="letterReadView">
+        <p id="letterModalBody" class="font-body text-base sm:text-lg text-roseDark/90 whitespace-pre-line leading-relaxed"></p>
+        <p class="font-hand text-2xl text-roseAccent mt-6 text-right">Всегда рядом, твой Темирлан</p>
+
+        <div class="mt-7 pt-4 border-t border-roseSoft/50 flex items-center justify-between">
+          <button id="switchToEditLetterBtn" class="inline-flex items-center gap-1.5 text-xs font-medium text-roseAccent hover:text-roseDark transition">
+            <i data-lucide="pen-line" class="w-3.5 h-3.5"></i>
+            <span>Редактировать текст письма</span>
+          </button>
+          <button data-close-modal="letterModal" class="px-5 py-2 rounded-full bg-roseLight hover:bg-roseSoft text-roseDark text-xs font-medium transition">
+            Закрыть конверт
+          </button>
+        </div>
+      </div>
+
+      <!-- Edit View -->
+      <div id="letterEditView" class="hidden space-y-4">
+        <textarea id="letterEditTextarea" rows="7" class="w-full p-4 rounded-2xl bg-white/90 border border-roseSoft font-body text-base text-roseDark focus:outline-none focus:border-roseAccent"></textarea>
+        <div class="flex items-center justify-end gap-2.5">
+          <button id="cancelEditLetterBtn" class="px-4 py-2 rounded-full bg-roseLight/70 text-roseDark text-xs font-medium">Отмена</button>
+          <button id="saveLetterBtn" class="px-5 py-2 rounded-full bg-roseAccent text-white text-xs font-medium shadow-sm">Сохранить письмо</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add Dream -->
+  <div id="addDreamModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-roseDeep/35 backdrop-blur-sm modal-backdrop overflow-y-auto">
+    <div class="bg-white max-w-lg w-full rounded-3xl p-6 sm:p-8 shadow-soft border border-roseSoft my-8 relative">
+      <button data-close-modal="addDreamModal" class="absolute top-4 right-4 p-2 rounded-full text-roseDark/60 hover:bg-roseLight/60">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+      <h3 class="font-serif text-3xl font-semibold text-roseDark mb-1">Новая совместная мечта</h3>
+      <p class="text-xs text-roseDark/70 mb-5">Добавь место, желание или план на будущее.</p>
+
+      <form id="addDreamForm" class="space-y-4">
+        <div>
+          <label class="block text-xs font-medium text-roseDark mb-1">Название мечты</label>
+          <input type="text" id="dreamTitleInput" placeholder="Встретить закат у моря..." required class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-roseDark mb-1">Категория</label>
+            <select id="dreamCategoryInput" class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent">
+              <option value="Города и путешествия">Города и путешествия</option>
+              <option value="Места для свиданий">Места для свиданий</option>
+              <option value="Маленькие желания">Маленькие желания</option>
+              <option value="Большие планы">Большие планы</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-roseDark mb-1">Примерная дата / сезон</label>
+            <input type="text" id="dreamDateInput" placeholder="Лето 2026" class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-roseDark mb-1">Описание</label>
+          <textarea id="dreamDescInput" rows="2" placeholder="Почему мы этого хотим..." class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-roseDark mb-1">Фото места (необязательно)</label>
+          <input type="file" id="dreamPhotoInput" accept="image/*" class="w-full text-xs text-roseDark file:mr-3 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:bg-roseLight file:text-roseDark cursor-pointer" />
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-2xl bg-roseAccent hover:bg-roseDark text-white font-medium text-sm transition shadow-soft">
+          Добавить в наш список
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Secret Surprise -->
+  <div id="secretSurpriseModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-roseDeep/45 backdrop-blur-md modal-backdrop">
+    <div class="glass-card bg-white/95 max-w-md w-full rounded-3xl p-7 sm:p-8 text-center shadow-2xl border border-roseAccent/50 relative">
+      <button data-close-modal="secretSurpriseModal" class="absolute top-4 right-4 p-2 rounded-full text-roseDark/60 hover:bg-roseLight/60">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <div class="w-14 h-14 wax-seal rounded-full flex items-center justify-center mx-auto mb-4 text-white">
+        <i data-lucide="gift" class="w-6 h-6"></i>
+      </div>
+
+      <p class="font-serif italic text-roseAccent text-base mb-1">Secret Surprise</p>
+      <h3 class="font-serif text-3xl font-semibold text-roseDark mb-4">Ты нашла тайное сердечко!</h3>
+
+      <div id="secretReadBox" class="bg-roseBg rounded-2xl p-5 border border-roseSoft/70 mb-5">
+        <p id="secretMessageDisplay" class="font-body text-base text-roseDark leading-relaxed">
+          «Этот купон даёт тебе право на свидание твоей мечты в любой день, который ты выберешь — с твоими любимыми цветами, вкусным ужином и долгими объятиями.»
+        </p>
+      </div>
+
+      <div id="secretEditBox" class="hidden mb-4 space-y-2">
+        <textarea id="secretMessageInput" rows="3" class="w-full p-3 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark"></textarea>
+        <button id="saveSecretBtn" class="px-4 py-2 rounded-full bg-roseAccent text-white text-xs font-medium">Сохранить сюрприз</button>
+      </div>
+
+      <button id="editSecretToggleBtn" class="text-xs text-roseAccent hover:underline">
+        Изменить текст сюрприза
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal: Add / Edit Reminder -->
+  <div id="reminderModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-roseDeep/35 backdrop-blur-sm modal-backdrop overflow-y-auto">
+    <div class="bg-white max-w-lg w-full rounded-3xl p-6 sm:p-8 shadow-soft border border-roseSoft my-8 relative">
+      <button data-close-modal="reminderModal" class="absolute top-4 right-4 p-2 rounded-full text-roseDark/60 hover:bg-roseLight/60">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+      <h3 id="reminderModalHeading" class="font-serif text-3xl font-semibold text-roseDark mb-1">Новая напоминалка</h3>
+      <p class="text-xs text-roseDark/70 mb-5">Свидание, день рождения, поход в кино или просто «не забудь позвонить».</p>
+
+      <form id="reminderForm" class="space-y-4">
+        <input type="hidden" id="reminderEditId" />
+        <div>
+          <label class="block text-xs font-medium text-roseDark mb-1">Что не забыть</label>
+          <input type="text" id="reminderTextInput" placeholder="Сходить на каток..." required class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-roseDark mb-1">Дата</label>
+            <input type="date" id="reminderDateInput" required class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-roseDark mb-1">Время (необязательно)</label>
+            <input type="time" id="reminderTimeInput" class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-roseDark mb-1">Заметка (необязательно)</label>
+          <textarea id="reminderNoteInput" rows="2" placeholder="Взять тёплые варежки..." class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-roseDark mb-1">Кто добавляет</label>
+          <select id="reminderAuthorInput" class="w-full px-3.5 py-2.5 rounded-xl bg-roseBg border border-roseSoft text-sm text-roseDark focus:outline-none focus:border-roseAccent">
+            <option value="Арайка">Арайка</option>
+            <option value="Темирлан">Темирлан</option>
+          </select>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-2xl bg-roseAccent hover:bg-roseDark text-white font-medium text-sm transition shadow-soft">
+          Сохранить напоминалку
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Settings, Privacy & Backup -->
+  <div id="settingsModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-roseDeep/35 backdrop-blur-sm modal-backdrop overflow-y-auto">
+    <div class="bg-white max-w-lg w-full rounded-3xl p-6 sm:p-8 shadow-soft border border-roseSoft my-8 relative">
+      <button data-close-modal="settingsModal" class="absolute top-4 right-4 p-2 rounded-full text-roseDark/60 hover:bg-roseLight/60">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+      <h3 class="font-serif text-3xl font-semibold text-roseDark mb-1">Настройки и Приватность</h3>
+      <p id="settingsStorageHint" class="text-xs text-roseDark/70 mb-6">Все фотографии, письма и записи сохраняются автоматически.</p>
+
+      <div class="space-y-5">
+        <!-- Site Password Protection -->
+        <div class="p-4 rounded-2xl bg-roseBg border border-roseSoft/60">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-semibold text-roseDark">Вход на сайт по паролю</span>
+            <input type="checkbox" id="enableSiteLockCheckbox" class="w-4 h-4 accent-[#B66C88] cursor-pointer" />
+          </div>
+          <p class="text-xs text-roseDark/70 mb-3">Если включить, при открытии сайта потребуется ввести общий пароль для доступа к личным фото и письмам.</p>
+          <input type="text" id="sitePasswordSettingInput" placeholder="Задать пароль для входа (например: araika1303)" class="w-full px-3.5 py-2 rounded-xl bg-white border border-roseSoft text-xs text-roseDark" />
+        </div>
+
+        <!-- Hero Caption -->
+        <div class="p-4 rounded-2xl bg-roseBg border border-roseSoft/60 space-y-3">
+          <div>
+            <label class="block text-xs font-semibold text-roseDark mb-1">Подпись под главным фото</label>
+            <input type="text" id="heroCaptionSettingInput" placeholder="Наше любимое фото • 13.03.2026" class="w-full px-3.5 py-2 rounded-xl bg-white border border-roseSoft text-xs text-roseDark" />
+          </div>
+        </div>
+
+        <button id="saveSettingsBtn" class="w-full py-2.5 rounded-xl bg-roseAccent hover:bg-roseDark text-white text-sm font-medium transition">
+          Сохранить настройки
+        </button>
+
+        <!-- Backup Export / Import -->
+        <div class="pt-4 border-t border-roseSoft/50">
+          <p class="text-xs font-semibold text-roseDark mb-2">Резервная копия (на всякий случай)</p>
+          <div class="grid grid-cols-2 gap-3">
+            <button id="exportBackupBtn" class="py-2.5 px-3 rounded-xl bg-roseLight/80 hover:bg-roseSoft text-roseDark text-xs font-medium flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i>
+              <span>Скачать JSON</span>
+            </button>
+            <label class="py-2.5 px-3 rounded-xl bg-roseLight/80 hover:bg-roseSoft text-roseDark text-xs font-medium flex items-center justify-center gap-1.5 transition cursor-pointer">
+              <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+              <span>Загрузить JSON</span>
+              <input type="file" id="importBackupInput" accept=".json" class="hidden" />
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT APPLICATION LOGIC ==================== -->
+  <script type="module">
+    // =====================================================================
+    //  НАСТРОЙКА ОБЛАКА (Firebase). Вставь сюда свой firebaseConfig.
+    //  Пока apiKey пустой — сайт работает в локальном режиме (данные только
+    //  в этом браузере). Как заполнить, написано в README.
+    // =====================================================================
+    const FIREBASE_CONFIG = {
+      apiKey: 'AIzaSyBfIaQ3Dr2Eun0aN82nGhkhqlgPtW5bEWQ',
+      authDomain: 'araika-e39b5.firebaseapp.com',
+      projectId: 'araika-e39b5',
+      storageBucket: 'araika-e39b5.firebasestorage.app',
+      messagingSenderId: '636798333128',
+      appId: '1:636798333128:web:7329058dcd93fd41d2b5fd',
+    };
+    // Имя «пространства» в базе. Можно не трогать.
+    const WORLD_ID = 'araika-temirlan';
+    const FIREBASE_VERSION = '10.12.2';
+
+    const START_DATE = new Date(2026, 2, 13, 0, 0, 0); // 13 марта 2026
+    const COLLECTIONS = ['memories', 'story', 'reminders', 'dreams', 'letters'];
+    const MAX_IMG_CHARS = 700000; // запас под лимит документа Firestore (1 МБ)
+
+    // Ключи, которые остаются на конкретном устройстве
+    const LS_FIRST_VISIT = 'araika_first_visit_done';
+    const LS_UNLOCKED = 'araika_unlocked_pw';
+    const LS_LAST_AUTHOR = 'araika_last_author';
+
+    // ==================== ДАННЫЕ ПО УМОЛЧАНИЮ ====================
+    const DEFAULT_META = {
+      settings: {
+        siteLockEnabled: false,
+        sitePassword: '',
+        heroCaption: 'Наше любимое фото • 13.03.2026',
+      },
+      missMeMessages: [
+        'Даже если мы сейчас не рядом, я всё равно думаю о тебе.',
+        'Самое лучшее время суток — то, которое я провожу рядом с тобой.',
+        'Помни: у тебя есть человек, для которого твоя улыбка важнее всего.',
+        'Если ты соскучилась — просто напиши мне одно слово, и я сразу отзовусь.',
+        'Я люблю в тебе каждую мелочь — от твоего смеха до того, как ты смотришь на мир.',
+        'С 13 марта 2026 года каждый мой день стал теплее благодаря тебе.',
+      ],
+      secretMessage:
+        'Этот купон даёт тебе право на свидание твоей мечты в любой день, который ты выберешь — с твоими любимыми цветами, вкусным ужином и долгими объятиями.',
+    };
+
+    const DEFAULT_DOCS = {
+      story: [
+        {
+          id: 'story-start-1303',
+          date: '2026-03-13',
+          title: '13 марта 2026 — начало нашей истории.',
+          description: 'День, с которого всё стало по-настоящему особенным. Здесь мы будем сохранять все важные главы нашей жизни.',
+          note: 'Самое начало нашего маленького мира.',
+          photo: null,
+          locked: true,
+          createdAt: 1,
+        },
+      ],
+      letters: [
+        {
+          id: 'letter-miss', order: 1,
+          title: 'Открой, когда скучаешь',
+          subtitle: 'Когда нас разделяют километры или дела',
+          body: 'Моя родная Арайка,\n\nЕсли ты сейчас открыла этот конверт, значит, нам обоим не хватает друг друга прямо в эту секунду. Просто закрой глаза на мгновение и вспомни наш последний тёплый вечер, мой голос и то, как спокойно нам рядом.\n\nГде бы я ни был и чем бы ни занимался, часть моих мыслей всегда с тобой. Совсем скоро мы снова увидимся, и я крепко тебя обниму.',
+        },
+        {
+          id: 'letter-sad', order: 2,
+          title: 'Открой, когда грустно',
+          subtitle: 'Если день выдался тяжёлым',
+          body: 'Солнышко моё,\n\nБывают дни, когда всё валится из рук и на душе становится тяжело без видимой причины. Пожалуйста, не держи это в себе и не ругай себя за усталость.\n\nТы не обязана всегда быть сильной. Я рядом — чтобы выслушать, поддержать, привезти что-нибудь вкусное или просто молча побыть с тобой. Напиши мне, как только захочешь.',
+        },
+        {
+          id: 'letter-sleep', order: 3,
+          title: 'Открой, когда не можешь уснуть',
+          subtitle: 'Для тихой ночи и спокойных снов',
+          body: 'Спи спокойно, моя хорошая,\n\nОтложи телефон после этих строк, укройся потеплее и сделай глубокий, медленный вдох. Все заботы подождут до утра.\n\nПредставь, что я рядом, глажу тебя по волосам и шепчу, что всё будет хорошо. Пусть тебе приснится что-то светлое и уютное. До завтра, любимая.',
+        },
+        {
+          id: 'letter-doubt', order: 4,
+          title: 'Открой, когда сомневаешься в себе',
+          subtitle: 'Напоминание о том, какая ты невероятная',
+          body: 'Моя прекрасная Арайка,\n\nИногда ты слишком строга к себе и не замечаешь, сколько в тебе света, доброты, ума и внутренней красоты. Но я вижу это каждый день.\n\nЯ искренне восхищаюсь тем, как ты чувствуешь этот мир, как заботишься о близких и остаёшься собой. У тебя обязательно всё получится, а я всегда буду твоей самой надёжной опорой.',
+        },
+        {
+          id: 'letter-love', order: 5,
+          title: 'Открой, когда хочешь почувствовать мою любовь',
+          subtitle: 'О том, что я чувствую к тебе',
+          body: 'Любимая,\n\nМоя любовь к тебе — это не громкие слова, а желание беречь тебя каждый день, радоваться твоей улыбке и строить наше общее будущее.\n\nС 13 марта 2026 года ты стала самым дорогим человеком в моей жизни. Спасибо тебе за нежность, доверие и за то, что ты есть.',
+        },
+        {
+          id: 'letter-just', order: 6,
+          title: 'Просто открой, потому что я тебя люблю',
+          subtitle: 'Без всякого повода',
+          body: 'Привет, моя радость,\n\nДля этого письма не нужен никакой повод. Я просто захотел напомнить тебе, что ты — лучшее, что случалось со мной.\n\nУлыбнись прямо сейчас. Эта улыбка тебе невероятно идёт.',
+        },
+      ],
+      dreams: [
+        {
+          id: 'dream-1', createdAt: 3,
+          title: 'Устроить уютный пикник на закате',
+          category: 'Места для свиданий',
+          date: 'Весна / Лето 2026',
+          description: 'Плед, любимые ягоды, тёплый чай в термосе и разговоры до первых звёзд.',
+          photo: null, completed: false,
+        },
+        {
+          id: 'dream-2', createdAt: 2,
+          title: 'Наше первое совместное путешествие',
+          category: 'Города и путешествия',
+          date: '2026',
+          description: 'Новый город, утренний кофе на незнакомой улочке и десятки общих фотографий.',
+          photo: null, completed: false,
+        },
+        {
+          id: 'dream-3', createdAt: 1,
+          title: 'Собрать целый альбом распечатанных полароидов',
+          category: 'Маленькие желания',
+          date: 'В течение года',
+          description: 'Чтобы наши снимки жили не только в телефоне, но и в настоящем бумажном альбоме.',
+          photo: null, completed: false,
+        },
+      ],
+    };
+
+    // ==================== СОСТОЯНИЕ ====================
+    const state = {
+      meta: mergeMeta(structuredClone(DEFAULT_META), {}),
+      heroPhoto: null,
+      memories: [], story: [], reminders: [], dreams: [], letters: [],
+    };
+    const ui = { activeAlbum: 'Все', activeDreamCategory: 'Все', randomShown: false };
+    let backend = null;
+    let currentLightboxId = null;
+    let currentLetterId = null;
+
+    // ==================== УТИЛИТЫ ====================
+    function mergeMeta(base, patch) {
+      return {
+        ...base,
+        ...patch,
+        settings: { ...(base.settings || {}), ...((patch && patch.settings) || {}) },
+      };
+    }
+
+    const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ESC_MAP[c]);
+    const uid = (p) => `${p}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
+    const isISODate = (d) => /^\d{4}-\d{2}-\d{2}$/.test(d || '');
+
+    function parseISO(d) {
+      const [y, m, day] = d.split('-').map(Number);
+      return new Date(y, m - 1, day);
+    }
+
+    function fmtDate(d) {
+      if (!isISODate(d)) return d || '';
+      return parseISO(d)
+        .toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })
+        .replace(/\s?г\.?$/, '');
+    }
+
+    function todayISO() {
+      const t = new Date();
+      return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
+    }
+
+    function plural(n, one, few, many) {
+      const m10 = n % 10, m100 = n % 100;
+      if (m10 === 1 && m100 !== 11) return one;
+      if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
+      return many;
+    }
+
+    function daysUntil(iso) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return Math.round((parseISO(iso) - today) / 86400000);
+    }
+
+    function relLabel(n) {
+      if (n === 0) return 'Сегодня';
+      if (n === 1) return 'Завтра';
+      if (n === -1) return 'Вчера';
+      if (n > 1) return `Через ${n} ${plural(n, 'день', 'дня', 'дней')}`;
+      return `${-n} ${plural(-n, 'день', 'дня', 'дней')} назад`;
+    }
+
+    // Сжатие фото: подбираем размер/качество, чтобы влезть в лимит документа
+    function loadImage(file) {
+      return new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(file);
+        const img = new Image();
+        img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+        img.onerror = (e) => { URL.revokeObjectURL(url); reject(e); };
+        img.src = url;
+      });
+    }
+
+    async function compressImage(file, maxWidth = 1000, quality = 0.8) {
+      const img = await loadImage(file);
+      let w = maxWidth, q = quality, out = '';
+      for (let i = 0; i < 7; i++) {
+        const scale = Math.min(1, w / img.width);
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        out = canvas.toDataURL('image/jpeg', q);
+        if (out.length < MAX_IMG_CHARS) return out;
+        w = Math.round(w * 0.8);
+        q = Math.max(0.5, q - 0.07);
+      }
+      return out;
+    }
+
+    // Toast
+    let toastTimer;
+    function showToast(msg) {
+      const box = document.getElementById('toastBox');
+      document.getElementById('toastText').textContent = msg;
+      box.classList.remove('opacity-0', '-translate-y-3');
+      box.classList.add('opacity-100', 'translate-y-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        box.classList.add('opacity-0', '-translate-y-3');
+        box.classList.remove('opacity-100', 'translate-y-0');
+      }, 2800);
+    }
+
+    // Запуск записи: UI обновится сразу через подписку, ошибки покажем тостом
+    function run(promise, okMsg) {
+      if (okMsg) showToast(okMsg);
+      Promise.resolve(promise).catch((err) => {
+        console.error(err);
+        const quota = err && (err.name === 'QuotaExceededError' || /quota/i.test(err.message || ''));
+        showToast(quota
+          ? 'Память браузера заполнена — скачай бэкап в настройках'
+          : 'Не удалось сохранить: ' + ((err && (err.code || err.message)) || 'ошибка'));
+      });
+    }
+
+    function setSyncStatus(kind) {
+      const dot = document.getElementById('syncDot');
+      const label = document.getElementById('syncLabel');
+      const hint = document.getElementById('settingsStorageHint');
+      dot.classList.remove('bg-amber-400', 'bg-emerald-500', 'bg-rose-500');
+      if (kind === 'cloud') {
+        dot.classList.add('bg-emerald-500');
+        label.textContent = 'Синхронизировано';
+        hint.textContent = 'Всё сохраняется в облаке и сразу видно на всех устройствах.';
+      } else if (kind === 'local') {
+        dot.classList.add('bg-amber-400');
+        label.textContent = 'Только это устройство';
+        hint.textContent = 'Облако не настроено: данные хранятся только в этом браузере.';
+      } else {
+        dot.classList.add('bg-rose-500');
+        label.textContent = 'Нет связи';
+        hint.textContent = 'Не удалось подключиться к облаку. Проверь интернет и настройки Firebase.';
+      }
+    }
+
+    // Модалки
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('hidden');
+      el.classList.add('flex');
+    }
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('hidden');
+      el.classList.remove('flex');
+    }
+    document.querySelectorAll('[data-close-modal]').forEach((btn) => {
+      btn.addEventListener('click', () => closeModal(btn.getAttribute('data-close-modal')));
+    });
+
+    // ==================== ХРАНИЛИЩЕ: ЛОКАЛЬНОЕ ====================
+    function createLocalBackend() {
+      const KEY = 'araika_little_world_v2';
+      let db = null;
+      try { db = JSON.parse(localStorage.getItem(KEY)); } catch (e) { db = null; }
+      let emit = () => {};
+      const persist = () => localStorage.setItem(KEY, JSON.stringify(db));
+      const emitCol = (c) => emit('col', c, Object.values(db.cols[c] || {}));
+
+      return {
+        mode: 'local',
+        async start(e) {
+          emit = e;
+          if (!db) {
+            db = { meta: structuredClone(DEFAULT_META), hero: null, cols: {} };
+            COLLECTIONS.forEach((c) => (db.cols[c] = {}));
+            for (const [c, items] of Object.entries(DEFAULT_DOCS)) {
+              items.forEach((it) => (db.cols[c][it.id] = structuredClone(it)));
+            }
+            try { persist(); } catch (err) { console.error(err); }
+          }
+          COLLECTIONS.forEach((c) => { db.cols[c] = db.cols[c] || {}; });
+          emit('meta', db.meta);
+          emit('hero', db.hero);
+          COLLECTIONS.forEach(emitCol);
+        },
+        async put(c, id, obj) { db.cols[c][id] = { ...obj, id }; emitCol(c); persist(); },
+        async patch(c, id, p) {
+          if (!db.cols[c][id]) return;
+          Object.assign(db.cols[c][id], p); emitCol(c); persist();
+        },
+        async del(c, id) { delete db.cols[c][id]; emitCol(c); persist(); },
+        async setMeta(p) { db.meta = mergeMeta(db.meta, p); emit('meta', db.meta); persist(); },
+        async setHero(photo) { db.hero = photo; emit('hero', photo); persist(); },
+      };
+    }
+
+    // ==================== ХРАНИЛИЩЕ: FIREBASE (ОБЩЕЕ) ====================
+    async function createFirebaseBackend() {
+      const base = `https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}`;
+      const [appMod, authMod, fs] = await Promise.all([
+        import(`${base}/firebase-app.js`),
+        import(`${base}/firebase-auth.js`),
+        import(`${base}/firebase-firestore.js`),
+      ]);
+
+      const app = appMod.initializeApp(FIREBASE_CONFIG);
+      await authMod.signInAnonymously(authMod.getAuth(app));
+
+      let db;
+      try {
+        db = fs.initializeFirestore(app, {
+          ignoreUndefinedProperties: true,
+          localCache: fs.persistentLocalCache({ tabManager: fs.persistentMultipleTabManager() }),
+        });
+      } catch (e) {
+        db = fs.getFirestore(app);
+      }
+
+      const colRef = (c) => fs.collection(db, 'worlds', WORLD_ID, c);
+      const docRef = (c, id) => fs.doc(db, 'worlds', WORLD_ID, c, id);
+      const metaRef = fs.doc(db, 'worlds', WORLD_ID, 'meta', 'main');
+      const heroRef = fs.doc(db, 'worlds', WORLD_ID, 'meta', 'hero');
+
+      return {
+        mode: 'cloud',
+        async start(emit) {
+          // Первый запуск: заполняем базу письмами, мечтами и началом истории
+          const snap = await fs.getDoc(metaRef);
+          if (!snap.exists()) {
+            const batch = fs.writeBatch(db);
+            batch.set(metaRef, DEFAULT_META);
+            for (const [c, items] of Object.entries(DEFAULT_DOCS)) {
+              items.forEach((it) => batch.set(docRef(c, it.id), it));
+            }
+            await batch.commit();
+          }
+
+          const onErr = (err) => {
+            console.error(err);
+            setSyncStatus('error');
+            showToast('Ошибка синхронизации: ' + (err.code || err.message));
+          };
+          fs.onSnapshot(metaRef, (s) => emit('meta', s.data() || {}), onErr);
+          fs.onSnapshot(heroRef, (s) => emit('hero', s.exists() ? s.data().photo : null), onErr);
+          COLLECTIONS.forEach((c) =>
+            fs.onSnapshot(colRef(c), (qs) => emit('col', c, qs.docs.map((d) => ({ ...d.data(), id: d.id }))), onErr)
+          );
+        },
+        put: (c, id, obj) => fs.setDoc(docRef(c, id), { ...obj, id }),
+        patch: (c, id, p) => fs.updateDoc(docRef(c, id), p),
+        del: (c, id) => fs.deleteDoc(docRef(c, id)),
+        setMeta: (p) => fs.setDoc(metaRef, p, { merge: true }),
+        setHero: (photo) => fs.setDoc(heroRef, { photo }),
+      };
+    }
+
+    // ==================== ПРИЁМ ДАННЫХ ИЗ ХРАНИЛИЩА ====================
+    let metaLoaded = false;
+    function onData(kind, a, b) {
+      if (kind === 'meta') {
+        state.meta = mergeMeta(structuredClone(DEFAULT_META), a || {});
+        renderHeroPhoto();
+        if (!metaLoaded) {
+          metaLoaded = true;
+          finishLoading();
+        }
+      } else if (kind === 'hero') {
+        state.heroPhoto = a || null;
+        renderHeroPhoto();
+      } else if (kind === 'col') {
+        state[a] = b;
+        if (a === 'memories') {
+          renderMemories();
+          if (!ui.randomShown || !state.memories.length) showRandomMemory();
+        }
+        if (a === 'story') {
+          renderStory();
+          if (!ui.randomShown) showRandomMemory();
+        }
+        if (a === 'reminders') renderReminders();
+        if (a === 'dreams') renderDreams();
+        if (a === 'letters') renderLetters();
+      }
+    }
+
+    function finishLoading() {
+      const el = document.getElementById('loadingOverlay');
+      el.classList.add('hidden');
+      el.classList.remove('flex');
+      initOverlays();
+    }
+
+    // ==================== 1. ПАРОЛЬ И ПРИВЕТСТВЕННЫЙ КОНВЕРТ ====================
+    let overlaysInited = false;
+    function initOverlays() {
+      if (overlaysInited) return;
+      overlaysInited = true;
+      const lockOverlay = document.getElementById('privacyLockOverlay');
+      const welcomeOverlay = document.getElementById('welcomeEnvelopeOverlay');
+      const s = state.meta.settings;
+      const show = (el) => { el.classList.remove('hidden'); el.classList.add('flex'); };
+      const hide = (el) => { el.classList.add('hidden'); el.classList.remove('flex'); };
+      const showWelcomeIfFirst = () => { if (!localStorage.getItem(LS_FIRST_VISIT)) show(welcomeOverlay); };
+
+      if (s.siteLockEnabled && s.sitePassword && localStorage.getItem(LS_UNLOCKED) !== s.sitePassword) {
+        show(lockOverlay);
+      } else {
+        showWelcomeIfFirst();
+      }
+
+      document.getElementById('privacyUnlockForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const val = document.getElementById('privacyPasswordInput').value;
+        if (val === state.meta.settings.sitePassword) {
+          localStorage.setItem(LS_UNLOCKED, val); // запоминаем на этом устройстве
+          hide(lockOverlay);
+          showWelcomeIfFirst();
+        } else {
+          document.getElementById('privacyErrorMsg').classList.remove('hidden');
+        }
+      });
+
+      document.getElementById('openWorldBtn').addEventListener('click', () => {
+        hide(welcomeOverlay);
+        localStorage.setItem(LS_FIRST_VISIT, '1');
+      });
+
+      document.getElementById('replayEnvelopeBtn').addEventListener('click', () => show(welcomeOverlay));
+    }
+
+    // ==================== 2. ГЛАВНОЕ ФОТО ====================
+    function renderHeroPhoto() {
+      const container = document.getElementById('heroPhotoContainer');
+      document.getElementById('heroCaptionText').textContent = state.meta.settings.heroCaption;
+
+      if (state.heroPhoto) {
+        container.innerHTML = `<img src="${esc(state.heroPhoto)}" alt="Арайка и Темирлан" class="w-full h-full object-cover" />`;
+      } else {
+        container.innerHTML = `
+          <div class="p-6 flex flex-col items-center justify-center text-center">
+            <div class="w-16 h-16 rounded-full bg-white/80 border border-roseSoft flex items-center justify-center text-roseAccent mb-4 shadow-sm">
+              <i data-lucide="image-plus" class="w-7 h-7"></i>
+            </div>
+            <p class="font-serif text-2xl font-semibold text-roseDark mb-1">Место для нашего фото</p>
+            <p class="text-xs text-roseDark/70 max-w-[220px] leading-relaxed mb-4">
+              Нажми кнопку «Фото» внизу рамки, чтобы загрузить наш любимый снимок
+            </p>
+            <span class="font-hand text-xl text-roseAccent">13.03.2026</span>
+          </div>`;
+      }
+      lucide.createIcons();
+    }
+
+    document.getElementById('heroPhotoInput').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      e.target.value = '';
+      if (!file) return;
+      try {
+        const photo = await compressImage(file, 1200, 0.85);
+        run(backend.setHero(photo), 'Фото сохранено');
+      } catch (err) {
+        showToast('Не удалось загрузить фото');
+      }
+    });
+
+    // ==================== 3. СЧЁТЧИК ВРЕМЕНИ ====================
+    function updateRelationshipTimer() {
+      let diff = Date.now() - START_DATE.getTime();
+      if (diff < 0) diff = 0;
+      const total = Math.floor(diff / 1000);
+      document.getElementById('timeDays').textContent = Math.floor(total / 86400);
+      document.getElementById('timeHours').textContent = String(Math.floor((total % 86400) / 3600)).padStart(2, '0');
+      document.getElementById('timeMinutes').textContent = String(Math.floor((total % 3600) / 60)).padStart(2, '0');
+      document.getElementById('timeSeconds').textContent = String(total % 60).padStart(2, '0');
+    }
+    setInterval(updateRelationshipTimer, 1000);
+    updateRelationshipTimer();
+
+    // Случайное воспоминание
+    function showRandomMemory() {
+      const contentEl = document.getElementById('randomMemoryContent');
+      const dateEl = document.getElementById('randomMemoryDate');
+      if (state.memories.length > 0) {
+        const item = state.memories[Math.floor(Math.random() * state.memories.length)];
+        contentEl.textContent = `«${item.title}» — ${item.story}`;
+        dateEl.textContent = fmtDate(item.date);
+        ui.randomShown = true;
+      } else if (state.story.length > 0) {
+        const item = state.story[Math.floor(Math.random() * state.story.length)];
+        contentEl.textContent = `${item.title} ${item.description}`;
+        dateEl.textContent = fmtDate(item.date);
+        ui.randomShown = true;
+      }
+    }
+    document.getElementById('refreshRandomMemoryBtn').addEventListener('click', showRandomMemory);
+
+    // «If you miss me»
+    function triggerMissMeModal() {
+      const pool = state.meta.missMeMessages || [];
+      if (!pool.length) return;
+      const msg = pool[Math.floor(Math.random() * pool.length)];
+      document.getElementById('missMeModalText').textContent = `«${msg}»`;
+      openModal('missMeModal');
+    }
+    document.getElementById('heroMissMeBtn').addEventListener('click', triggerMissMeModal);
+    document.getElementById('sectionMissMeBtn').addEventListener('click', triggerMissMeModal);
+    document.getElementById('nextMissMeBtn').addEventListener('click', triggerMissMeModal);
+
+    document.getElementById('addMissMeNoteBtn').addEventListener('click', () => {
+      const custom = window.prompt('Напиши новую тёплую фразу для кнопки «If you miss me»:');
+      if (custom && custom.trim()) {
+        run(backend.setMeta({ missMeMessages: [...(state.meta.missMeMessages || []), custom.trim()] }), 'Фраза добавлена');
+      }
+    });
+
+    // ==================== 4. ВОСПОМИНАНИЯ (ПОЛАРОИДЫ) ====================
+    const ALBUMS = ['Все', 'Свидания', 'Путешествия', 'Маленькие моменты', 'Особенные дни'];
+
+    function renderMemories() {
+      const filtersEl = document.getElementById('albumFilters');
+      filtersEl.innerHTML = ALBUMS.map((album) => {
+        const active = ui.activeAlbum === album;
+        return `<button data-album="${esc(album)}" class="px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium transition ${
+          active ? 'bg-roseAccent text-white shadow-sm' : 'glass-pill text-roseDark/80 hover:bg-roseLight/70'
+        }">${esc(album)}</button>`;
+      }).join('');
+
+      filtersEl.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          ui.activeAlbum = btn.getAttribute('data-album');
+          renderMemories();
+        });
+      });
+
+      const grid = document.getElementById('memoriesGrid');
+      const sorted = [...state.memories].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      const filtered = ui.activeAlbum === 'Все' ? sorted : sorted.filter((m) => m.album === ui.activeAlbum);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="polaroid-item rounded-2xl shadow-polaroid flex flex-col justify-between">
+            <div class="aspect-square rounded-xl bg-roseBg border border-dashed border-roseSoft flex flex-col items-center justify-center p-6 text-center">
+              <i data-lucide="camera" class="w-8 h-8 text-roseAccent/70 mb-3"></i>
+              <p class="font-serif text-xl font-semibold text-roseDark mb-1">Первый кадр ждёт вас</p>
+              <p class="text-xs text-roseDark/70 leading-relaxed">
+                Здесь появится ваша первая совместная фотография из альбома «${esc(ui.activeAlbum)}».
+              </p>
+            </div>
+            <div class="pt-4 px-1 flex items-center justify-between">
+              <span class="font-hand text-xl text-roseAccent">13.03.2026</span>
+              <button data-open-add-memory class="text-xs font-medium text-roseAccent hover:underline">+ Добавить фото</button>
+            </div>
+          </div>
+          <div class="polaroid-item rounded-2xl shadow-polaroid flex flex-col justify-between">
+            <div class="aspect-square rounded-xl bg-gradient-to-b from-roseLight/35 to-roseBg border border-dashed border-roseSoft flex flex-col items-center justify-center p-6 text-center">
+              <i data-lucide="sparkles" class="w-8 h-8 text-roseAccent/70 mb-3"></i>
+              <p class="font-serif text-xl font-semibold text-roseDark mb-1">Ваша маленькая история</p>
+              <p class="text-xs text-roseDark/70 leading-relaxed">
+                К каждой фотографии можно прикрепить дату, альбом и тёплое описание того дня.
+              </p>
+            </div>
+            <div class="pt-4 px-1 flex items-center justify-between">
+              <span class="font-hand text-xl text-roseDark/60">Арайка &amp; Темирлан</span>
+              <span class="text-[11px] text-roseDark/50">Полароид</span>
+            </div>
+          </div>`;
+        grid.querySelector('[data-open-add-memory]').addEventListener('click', openAddMemoryModal);
+      } else {
+        grid.innerHTML = filtered.map((item) => `
+          <article data-memory-id="${esc(item.id)}" class="polaroid-item rounded-2xl shadow-polaroid cursor-pointer flex flex-col justify-between">
+            <div>
+              <div class="aspect-square rounded-xl overflow-hidden bg-roseBg mb-3.5 relative">
+                <img src="${esc(item.photo)}" alt="${esc(item.title)}" loading="lazy" class="w-full h-full object-cover" />
+                <span class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-white/85 backdrop-blur-sm text-[11px] font-medium text-roseDark">${esc(item.album)}</span>
+              </div>
+              <h3 class="font-serif text-xl font-semibold text-roseDark px-1 line-clamp-1">${esc(item.title)}</h3>
+              <p class="text-xs text-roseDark/75 px-1 mt-1 line-clamp-2 leading-relaxed">${esc(item.story)}</p>
+            </div>
+            <div class="pt-3 mt-3 border-t border-roseSoft/30 px-1 flex items-center justify-between">
+              <span class="font-hand text-lg text-roseAccent">${esc(fmtDate(item.date))}</span>
+              <span class="text-[11px] text-roseDark/60 flex items-center gap-1">
+                <span>Открыть</span><i data-lucide="maximize-2" class="w-3 h-3"></i>
+              </span>
+            </div>
+          </article>`).join('');
+
+        grid.querySelectorAll('[data-memory-id]').forEach((card) => {
+          card.addEventListener('click', () => openLightbox(card.getAttribute('data-memory-id')));
+        });
+      }
+      lucide.createIcons();
+    }
+
+    function openAddMemoryModal() {
+      document.getElementById('addMemoryForm').reset();
+      document.getElementById('memoryDateInput').value = todayISO();
+      openModal('addMemoryModal');
+    }
+    document.getElementById('openAddMemoryModalBtn').addEventListener('click', openAddMemoryModal);
+
+    document.getElementById('addMemoryForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const file = document.getElementById('memoryPhotoInput').files[0];
+      if (!file) return;
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      try {
+        const id = uid('mem');
+        run(backend.put('memories', id, {
+          photo: await compressImage(file, 1100, 0.82),
+          album: document.getElementById('memoryAlbumInput').value,
+          date: document.getElementById('memoryDateInput').value,
+          title: document.getElementById('memoryTitleInput').value.trim(),
+          story: document.getElementById('memoryStoryInput').value.trim(),
+          createdAt: Date.now(),
+        }), 'Сохранено с любовью');
+        closeModal('addMemoryModal');
+      } catch (err) {
+        showToast('Ошибка при обработке фотографии');
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    function openLightbox(id) {
+      const item = state.memories.find((m) => m.id === id);
+      if (!item) return;
+      currentLightboxId = id;
+      document.getElementById('lightboxImg').src = item.photo;
+      document.getElementById('lightboxAlbum').textContent = item.album;
+      document.getElementById('lightboxDate').textContent = fmtDate(item.date);
+      document.getElementById('lightboxTitle').textContent = item.title;
+      document.getElementById('lightboxStory').textContent = item.story;
+      openModal('lightboxModal');
+    }
+
+    document.getElementById('deleteMemoryBtn').addEventListener('click', () => {
+      if (!currentLightboxId) return;
+      if (!confirm('Удалить это воспоминание? Оно исчезнет у вас обоих.')) return;
+      run(backend.del('memories', currentLightboxId), 'Воспоминание удалено');
+      closeModal('lightboxModal');
+    });
+
+    // ==================== 5. НАША ИСТОРИЯ (ТАЙМЛАЙН) ====================
+    function sortedStory() {
+      return [...state.story].sort((a, b) => {
+        const ai = isISODate(a.date), bi = isISODate(b.date);
+        if (ai && bi && a.date !== b.date) return a.date < b.date ? -1 : 1;
+        if (ai !== bi) return ai ? -1 : 1;
+        return (a.createdAt || 0) - (b.createdAt || 0);
+      });
+    }
+
+    function renderStory() {
+      const container = document.getElementById('storyTimelineContainer');
+      container.innerHTML = sortedStory().map((item, idx) => {
+        const right = idx % 2 === 1;
+        return `
+          <div class="relative pl-12 sm:pl-0 sm:grid sm:grid-cols-2 sm:gap-10 items-center">
+            <div class="absolute left-3.5 sm:left-1/2 top-6 w-3.5 h-3.5 rounded-full bg-roseAccent ring-4 ring-roseLight sm:-translate-x-1/2"></div>
+            <div class="${right ? 'sm:col-start-2' : 'sm:col-start-1'}">
+              <div class="glass-card rounded-3xl p-6 relative group">
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <span class="inline-block px-3 py-1 rounded-full bg-roseLight/80 text-roseAccent text-xs font-semibold">${esc(fmtDate(item.date))}</span>
+                  <div class="flex items-center gap-1.5">
+                    <button data-edit-story="${esc(item.id)}" title="Редактировать запись" class="p-1.5 rounded-full hover:bg-roseLight text-roseDark/65 hover:text-roseAccent transition">
+                      <i data-lucide="pen-line" class="w-3.5 h-3.5"></i>
+                    </button>
+                    ${!item.locked ? `
+                    <button data-del-story="${esc(item.id)}" title="Удалить запись" class="p-1.5 rounded-full hover:bg-rose-100 text-rose-500 transition">
+                      <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    </button>` : ''}
+                  </div>
+                </div>
+                <h3 class="font-serif text-2xl font-semibold text-roseDark mb-2">${esc(item.title)}</h3>
+                <p class="font-body text-sm sm:text-base text-roseDark/80 leading-relaxed whitespace-pre-line">${esc(item.description)}</p>
+                ${item.photo ? `
+                <div class="mt-4 rounded-2xl overflow-hidden max-h-60 border border-roseSoft/50">
+                  <img src="${esc(item.photo)}" alt="${esc(item.title)}" loading="lazy" class="w-full h-full object-cover" />
+                </div>` : ''}
+                ${item.note ? `<p class="font-hand text-xl text-roseAccent mt-4 pt-3 border-t border-roseSoft/40">✎ ${esc(item.note)}</p>` : ''}
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+
+      container.querySelectorAll('[data-edit-story]').forEach((btn) => {
+        btn.addEventListener('click', () => openStoryModal(btn.getAttribute('data-edit-story')));
+      });
+      container.querySelectorAll('[data-del-story]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (!confirm('Удалить эту запись из истории?')) return;
+          run(backend.del('story', btn.getAttribute('data-del-story')), 'Запись удалена');
+        });
+      });
+      lucide.createIcons();
+    }
+
+    function openStoryModal(editId = null) {
+      document.getElementById('storyForm').reset();
+      document.getElementById('storyEditId').value = editId || '';
+      const item = editId && state.story.find((s) => s.id === editId);
+      if (item) {
+        document.getElementById('storyModalHeading').textContent = 'Редактировать событие';
+        document.getElementById('storyDateInput').value = isISODate(item.date) ? item.date : '';
+        document.getElementById('storyTitleInput').value = item.title || '';
+        document.getElementById('storyDescInput').value = item.description || '';
+        document.getElementById('storyNoteInput').value = item.note || '';
+      } else {
+        document.getElementById('storyModalHeading').textContent = 'Новая запись в дневнике';
+        document.getElementById('storyDateInput').value = todayISO();
+      }
+      openModal('storyModal');
+    }
+    document.getElementById('openAddStoryModalBtn').addEventListener('click', () => openStoryModal(null));
+
+    document.getElementById('storyForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const editId = document.getElementById('storyEditId').value;
+      const file = document.getElementById('storyPhotoInput').files[0];
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      try {
+        const payload = {
+          date: document.getElementById('storyDateInput').value,
+          title: document.getElementById('storyTitleInput').value.trim(),
+          description: document.getElementById('storyDescInput').value.trim(),
+          note: document.getElementById('storyNoteInput').value.trim(),
+        };
+        if (file) payload.photo = await compressImage(file, 1000, 0.82);
+
+        if (editId) {
+          run(backend.patch('story', editId, payload), 'Сохранено с любовью');
+        } else {
+          run(backend.put('story', uid('story'), {
+            photo: null, ...payload, locked: false, createdAt: Date.now(),
+          }), 'Сохранено с любовью');
+        }
+        closeModal('storyModal');
+      } catch (err) {
+        showToast('Ошибка при обработке фотографии');
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    // ==================== 6. НАПОМИНАЛКИ ====================
+    function sortedReminders() {
+      return [...state.reminders].sort((a, b) => {
+        if (!!a.done !== !!b.done) return a.done ? 1 : -1;
+        const ka = (a.date || '9999') + (a.time || '99:99');
+        const kb = (b.date || '9999') + (b.time || '99:99');
+        return a.done ? (ka < kb ? 1 : -1) : (ka < kb ? -1 : 1);
+      });
+    }
+
+    function renderReminders() {
+      const list = document.getElementById('remindersList');
+      const items = sortedReminders();
+
+      if (!items.length) {
+        list.innerHTML = `
+          <div class="col-span-full text-center py-10 bg-white/60 rounded-2xl border border-dashed border-roseSoft">
+            <i data-lucide="bell" class="w-7 h-7 text-roseAccent/70 mx-auto mb-2"></i>
+            <p class="font-serif text-2xl text-roseDark mb-1">Пока ни одной напоминалки</p>
+            <p class="text-xs text-roseDark/70">Нажми «Добавить напоминалку», чтобы ничего важного не забыть.</p>
+          </div>`;
+        lucide.createIcons();
+        return;
+      }
+
+      list.innerHTML = items.map((r) => {
+        const valid = isISODate(r.date);
+        const d = valid ? parseISO(r.date) : null;
+        const n = valid ? daysUntil(r.date) : null;
+        const soon = !r.done && n !== null && n >= 0 && n <= 3;
+        const past = !r.done && n !== null && n < 0;
+        const badgeCls = r.done
+          ? 'bg-roseLight/60 text-roseDark/60'
+          : soon ? 'bg-roseAccent text-white' : past ? 'bg-rose-100 text-rose-600' : 'bg-roseLight/80 text-roseAccent';
+        return `
+          <div class="bg-white/85 rounded-2xl p-4 sm:p-5 border border-roseSoft/60 flex gap-4 transition ${r.done ? 'opacity-70' : ''} ${soon ? 'ring-1 ring-roseAccent/50' : ''}">
+            <div class="w-14 shrink-0 rounded-xl bg-roseBg border border-roseSoft/60 flex flex-col items-center justify-center py-2">
+              <span class="font-serif text-2xl font-bold text-roseDark leading-none">${d ? d.getDate() : '—'}</span>
+              <span class="text-[10px] uppercase tracking-wider text-roseAccent mt-1">${d ? esc(d.toLocaleDateString('ru-RU', { month: 'short' }).replace('.', '')) : ''}</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-start justify-between gap-2">
+                <button data-toggle-reminder="${esc(r.id)}" class="flex items-start gap-2.5 text-left group min-w-0">
+                  <span class="mt-0.5 w-5 h-5 rounded-full border flex items-center justify-center shrink-0 transition ${
+                    r.done ? 'bg-roseAccent border-roseAccent text-white' : 'border-roseAccent/60 group-hover:border-roseAccent'
+                  }">${r.done ? '<i data-lucide="check" class="w-3.5 h-3.5"></i>' : ''}</span>
+                  <span class="font-serif text-lg sm:text-xl font-semibold leading-snug break-words ${r.done ? 'line-through text-roseDark/55' : 'text-roseDark'}">${esc(r.text)}</span>
+                </button>
+                <div class="flex items-center gap-0.5 shrink-0">
+                  <button data-edit-reminder="${esc(r.id)}" title="Редактировать" class="p-1.5 rounded-full hover:bg-roseLight text-roseDark/60 hover:text-roseAccent transition">
+                    <i data-lucide="pen-line" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button data-del-reminder="${esc(r.id)}" title="Удалить" class="p-1.5 rounded-full hover:bg-rose-100 text-rose-400 hover:text-rose-600 transition">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+              ${r.note ? `<p class="text-xs sm:text-sm text-roseDark/75 mt-1.5 pl-[30px] leading-relaxed whitespace-pre-line">${esc(r.note)}</p>` : ''}
+              <div class="mt-2.5 pl-[30px] flex flex-wrap items-center gap-2 text-[11px]">
+                ${n !== null ? `<span class="px-2 py-0.5 rounded-full font-medium ${badgeCls}">${r.done ? 'Готово' : relLabel(n)}</span>` : ''}
+                ${r.time ? `<span class="inline-flex items-center gap-1 text-roseDark/65"><i data-lucide="clock" class="w-3 h-3"></i>${esc(r.time)}</span>` : ''}
+                ${r.author ? `<span class="font-hand text-base text-roseAccent">от ${esc(r.author === 'Арайка' ? 'Арайки' : 'Темирлана')}</span>` : ''}
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+
+      list.querySelectorAll('[data-toggle-reminder]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const r = state.reminders.find((x) => x.id === btn.getAttribute('data-toggle-reminder'));
+          if (!r) return;
+          run(backend.patch('reminders', r.id, { done: !r.done }), !r.done ? 'Отмечено как сделанное' : null);
+        });
+      });
+      list.querySelectorAll('[data-edit-reminder]').forEach((btn) => {
+        btn.addEventListener('click', () => openReminderModal(btn.getAttribute('data-edit-reminder')));
+      });
+      list.querySelectorAll('[data-del-reminder]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (!confirm('Удалить эту напоминалку?')) return;
+          run(backend.del('reminders', btn.getAttribute('data-del-reminder')), 'Напоминалка удалена');
+        });
+      });
+      lucide.createIcons();
+    }
+
+    function openReminderModal(editId = null) {
+      document.getElementById('reminderForm').reset();
+      document.getElementById('reminderEditId').value = editId || '';
+      const r = editId && state.reminders.find((x) => x.id === editId);
+      if (r) {
+        document.getElementById('reminderModalHeading').textContent = 'Редактировать напоминалку';
+        document.getElementById('reminderTextInput').value = r.text || '';
+        document.getElementById('reminderDateInput').value = r.date || '';
+        document.getElementById('reminderTimeInput').value = r.time || '';
+        document.getElementById('reminderNoteInput').value = r.note || '';
+        document.getElementById('reminderAuthorInput').value = r.author || 'Арайка';
+      } else {
+        document.getElementById('reminderModalHeading').textContent = 'Новая напоминалка';
+        document.getElementById('reminderDateInput').value = todayISO();
+        document.getElementById('reminderAuthorInput').value = localStorage.getItem(LS_LAST_AUTHOR) || 'Арайка';
+      }
+      openModal('reminderModal');
+    }
+    document.getElementById('openAddReminderModalBtn').addEventListener('click', () => openReminderModal(null));
+
+    document.getElementById('reminderForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const editId = document.getElementById('reminderEditId').value;
+      const author = document.getElementById('reminderAuthorInput').value;
+      localStorage.setItem(LS_LAST_AUTHOR, author);
+      const payload = {
+        text: document.getElementById('reminderTextInput').value.trim(),
+        date: document.getElementById('reminderDateInput').value,
+        time: document.getElementById('reminderTimeInput').value,
+        note: document.getElementById('reminderNoteInput').value.trim(),
+        author,
+      };
+      if (editId) {
+        run(backend.patch('reminders', editId, payload), 'Напоминалка обновлена');
+      } else {
+        run(backend.put('reminders', uid('rem'), { ...payload, done: false, createdAt: Date.now() }), 'Напоминалка сохранена');
+      }
+      closeModal('reminderModal');
+    });
+
+    // ==================== 7. ПИСЬМА ====================
+    function renderLetters() {
+      const grid = document.getElementById('lettersGrid');
+      const letters = [...state.letters].sort((a, b) => (a.order || 0) - (b.order || 0));
+      grid.innerHTML = letters.map((letter, idx) => `
+        <div class="envelope-wrapper">
+          <div data-letter-id="${esc(letter.id)}" class="envelope-card rounded-3xl p-7 cursor-pointer h-full flex flex-col justify-between text-center select-none overflow-hidden">
+            <div class="envelope-flap absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-roseLight/75 to-transparent pointer-events-none" style="clip-path: polygon(0 0, 100% 0, 50% 100%);"></div>
+            <div class="relative z-10 pt-3">
+              <div class="w-12 h-12 wax-seal rounded-full flex items-center justify-center mx-auto mb-5 text-white">
+                <i data-lucide="heart" class="w-5 h-5 fill-current"></i>
+              </div>
+              <p class="font-hand text-xl text-roseAccent mb-1">Письмо №${idx + 1}</p>
+              <h3 class="font-serif text-2xl font-semibold text-roseDark leading-snug mb-2">${esc(letter.title)}</h3>
+              <p class="text-xs text-roseDark/65">${esc(letter.subtitle)}</p>
+            </div>
+            <div class="pt-6 mt-4 border-t border-roseSoft/40 flex items-center justify-center gap-1.5 text-xs font-medium text-roseAccent">
+              <span>Нажми, чтобы распечатать</span>
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            </div>
+          </div>
+        </div>`).join('');
+
+      grid.querySelectorAll('[data-letter-id]').forEach((card) => {
+        card.addEventListener('click', () => {
+          card.classList.add('is-opening');
+          setTimeout(() => {
+            card.classList.remove('is-opening');
+            openLetterModal(card.getAttribute('data-letter-id'));
+          }, 340);
+        });
+      });
+      lucide.createIcons();
+    }
+
+    function openLetterModal(id) {
+      const letter = state.letters.find((l) => l.id === id);
+      if (!letter) return;
+      currentLetterId = id;
+      document.getElementById('letterModalTitle').textContent = letter.title;
+      document.getElementById('letterModalBody').textContent = letter.body;
+      document.getElementById('letterEditTextarea').value = letter.body;
+      document.getElementById('letterReadView').classList.remove('hidden');
+      document.getElementById('letterEditView').classList.add('hidden');
+      openModal('letterModal');
+    }
+
+    document.getElementById('switchToEditLetterBtn').addEventListener('click', () => {
+      document.getElementById('letterReadView').classList.add('hidden');
+      document.getElementById('letterEditView').classList.remove('hidden');
+    });
+    document.getElementById('cancelEditLetterBtn').addEventListener('click', () => {
+      document.getElementById('letterReadView').classList.remove('hidden');
+      document.getElementById('letterEditView').classList.add('hidden');
+    });
+    document.getElementById('saveLetterBtn').addEventListener('click', () => {
+      if (!currentLetterId) return;
+      const body = document.getElementById('letterEditTextarea').value;
+      run(backend.patch('letters', currentLetterId, { body }), 'Письмо сохранено');
+      document.getElementById('letterModalBody').textContent = body;
+      document.getElementById('letterReadView').classList.remove('hidden');
+      document.getElementById('letterEditView').classList.add('hidden');
+    });
+
+    // ==================== 8. МЕЧТЫ ====================
+    const DREAM_CATEGORIES = ['Все', 'Города и путешествия', 'Места для свиданий', 'Маленькие желания', 'Большие планы'];
+
+    function renderDreams() {
+      const total = state.dreams.length;
+      const done = state.dreams.filter((d) => d.completed).length;
+      const pct = total === 0 ? 0 : Math.round((done / total) * 100);
+      document.getElementById('futureProgressText').textContent = `${done} из ${total} (${pct}%)`;
+      document.getElementById('futureProgressBar').style.width = `${pct}%`;
+
+      const tabsEl = document.getElementById('dreamCategoryTabs');
+      tabsEl.innerHTML = DREAM_CATEGORIES.map((cat) => {
+        const active = ui.activeDreamCategory === cat;
+        return `<button data-dream-cat="${esc(cat)}" class="px-3.5 py-1.5 rounded-full text-xs font-medium transition ${
+          active ? 'bg-roseAccent text-white shadow-sm' : 'bg-white/75 text-roseDark/80 hover:bg-roseLight/70 border border-roseSoft/50'
+        }">${esc(cat)}</button>`;
+      }).join('');
+      tabsEl.querySelectorAll('button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          ui.activeDreamCategory = btn.getAttribute('data-dream-cat');
+          renderDreams();
+        });
+      });
+
+      const grid = document.getElementById('dreamsGrid');
+      const sorted = [...state.dreams].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      const list = ui.activeDreamCategory === 'Все' ? sorted : sorted.filter((d) => d.category === ui.activeDreamCategory);
+
+      if (list.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full text-center py-10 bg-white/60 rounded-2xl border border-dashed border-roseSoft">
+            <p class="font-serif text-2xl text-roseDark mb-1">В этой категории пока пусто</p>
+            <p class="text-xs text-roseDark/70">Нажми «Добавить мечту», чтобы записать новое желание.</p>
+          </div>`;
+      } else {
+        grid.innerHTML = list.map((dream) => `
+          <div class="bg-white/85 rounded-2xl p-5 border border-roseSoft/60 flex flex-col justify-between transition ${dream.completed ? 'ring-1 ring-roseAccent/40 bg-roseLight/25' : ''}">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <button data-toggle-dream="${esc(dream.id)}" class="flex items-start gap-3 text-left group">
+                  <span class="mt-0.5 w-5 h-5 rounded-full border flex items-center justify-center shrink-0 transition ${
+                    dream.completed ? 'bg-roseAccent border-roseAccent text-white' : 'border-roseAccent/60 group-hover:border-roseAccent'
+                  }">${dream.completed ? '<i data-lucide="check" class="w-3.5 h-3.5"></i>' : ''}</span>
+                  <span class="font-serif text-xl font-semibold leading-snug ${dream.completed ? 'line-through text-roseDark/55' : 'text-roseDark'}">${esc(dream.title)}</span>
+                </button>
+                <button data-del-dream="${esc(dream.id)}" class="text-rose-400 hover:text-rose-600 p-1" title="Удалить">
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+              ${dream.description ? `<p class="text-xs sm:text-sm text-roseDark/75 pl-8 leading-relaxed">${esc(dream.description)}</p>` : ''}
+              ${dream.photo ? `
+              <div class="mt-3 pl-8">
+                <img src="${esc(dream.photo)}" alt="${esc(dream.title)}" loading="lazy" class="w-full h-36 object-cover rounded-xl border border-roseSoft/50" />
+              </div>` : ''}
+            </div>
+            <div class="pt-3 mt-4 pl-8 border-t border-roseSoft/30 flex items-center justify-between text-[11px]">
+              <span class="text-roseAccent font-medium">${esc(dream.category)}</span>
+              <span class="text-roseDark/60">${esc(dream.date || 'Когда наступит время')}</span>
+            </div>
+          </div>`).join('');
+
+        grid.querySelectorAll('[data-toggle-dream]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const d = state.dreams.find((x) => x.id === btn.getAttribute('data-toggle-dream'));
+            if (!d) return;
+            run(backend.patch('dreams', d.id, { completed: !d.completed }), !d.completed ? 'Ещё одна мечта исполнена!' : null);
+          });
+        });
+        grid.querySelectorAll('[data-del-dream]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            if (!confirm('Удалить эту мечту из списка?')) return;
+            run(backend.del('dreams', btn.getAttribute('data-del-dream')), 'Мечта удалена');
+          });
+        });
+      }
+      lucide.createIcons();
+    }
+
+    document.getElementById('openAddDreamModalBtn').addEventListener('click', () => {
+      document.getElementById('addDreamForm').reset();
+      openModal('addDreamModal');
+    });
+
+    document.getElementById('addDreamForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const file = document.getElementById('dreamPhotoInput').files[0];
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      try {
+        run(backend.put('dreams', uid('dream'), {
+          title: document.getElementById('dreamTitleInput').value.trim(),
+          category: document.getElementById('dreamCategoryInput').value,
+          date: document.getElementById('dreamDateInput').value.trim(),
+          description: document.getElementById('dreamDescInput').value.trim(),
+          photo: file ? await compressImage(file, 900, 0.8) : null,
+          completed: false,
+          createdAt: Date.now(),
+        }), 'Мечта добавлена');
+        closeModal('addDreamModal');
+      } catch (err) {
+        showToast('Ошибка при обработке фотографии');
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    // ==================== 9. СЕКРЕТНОЕ СЕРДЕЧКО ====================
+    document.getElementById('secretHeartBtn').addEventListener('click', () => {
+      document.getElementById('secretMessageDisplay').textContent = `«${state.meta.secretMessage}»`;
+      document.getElementById('secretMessageInput').value = state.meta.secretMessage;
+      document.getElementById('secretEditBox').classList.add('hidden');
+      openModal('secretSurpriseModal');
+    });
+    document.getElementById('editSecretToggleBtn').addEventListener('click', () => {
+      document.getElementById('secretEditBox').classList.toggle('hidden');
+    });
+    document.getElementById('saveSecretBtn').addEventListener('click', () => {
+      const val = document.getElementById('secretMessageInput').value.trim();
+      if (val) {
+        run(backend.setMeta({ secretMessage: val }), 'Сюрприз сохранён');
+        document.getElementById('secretMessageDisplay').textContent = `«${val}»`;
+      }
+      document.getElementById('secretEditBox').classList.add('hidden');
+    });
+
+    // ==================== 10. НАСТРОЙКИ И БЭКАП ====================
+    document.getElementById('openSettingsBtn').addEventListener('click', () => {
+      const s = state.meta.settings;
+      document.getElementById('enableSiteLockCheckbox').checked = !!s.siteLockEnabled;
+      document.getElementById('sitePasswordSettingInput').value = s.sitePassword || '';
+      document.getElementById('heroCaptionSettingInput').value = s.heroCaption || '';
+      openModal('settingsModal');
+    });
+
+    document.getElementById('saveSettingsBtn').addEventListener('click', () => {
+      const sitePassword = document.getElementById('sitePasswordSettingInput').value.trim();
+      run(backend.setMeta({
+        settings: {
+          siteLockEnabled: document.getElementById('enableSiteLockCheckbox').checked,
+          sitePassword,
+          heroCaption: document.getElementById('heroCaptionSettingInput').value.trim() || DEFAULT_META.settings.heroCaption,
+        },
+      }), 'Настройки сохранены');
+      localStorage.setItem(LS_UNLOCKED, sitePassword); // это устройство уже «своё»
+      closeModal('settingsModal');
+    });
+
+    document.getElementById('exportBackupBtn').addEventListener('click', () => {
+      const data = { version: 2, meta: state.meta, heroPhoto: state.heroPhoto };
+      COLLECTIONS.forEach((c) => (data[c] = state[c]));
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `araika-little-world-backup-${todayISO()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      showToast('Резервная копия скачана');
+    });
+
+    // Принимает и новый формат, и старый бэкап (v1 из localStorage-версии)
+    document.getElementById('importBackupInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      e.target.value = '';
+      if (!file) return;
+      if (!confirm('Загрузить данные из файла? Записи с теми же ID будут перезаписаны, остальные останутся.')) return;
+      const reader = new FileReader();
+      reader.onload = async (ev) => {
+        try {
+          const imp = JSON.parse(ev.target.result);
+          const meta = imp.meta || {
+            ...(imp.settings ? { settings: imp.settings } : {}),
+            ...(imp.missMeMessages ? { missMeMessages: imp.missMeMessages } : {}),
+            ...(imp.secretMessage ? { secretMessage: imp.secretMessage } : {}),
+          };
+          if (meta.settings) delete meta.settings.authorPin;
+          const jobs = [backend.setMeta(meta)];
+          if (imp.heroPhoto) jobs.push(backend.setHero(imp.heroPhoto));
+          const now = Date.now();
+          COLLECTIONS.forEach((c) => {
+            (imp[c] || []).forEach((item, i) => {
+              if (!item || !item.id) return;
+              const obj = { ...item };
+              if (obj.createdAt === undefined && c !== 'letters') obj.createdAt = now - i;
+              if (c === 'letters' && obj.order === undefined) obj.order = i + 1;
+              jobs.push(backend.put(c, obj.id, obj));
+            });
+          });
+          await Promise.all(jobs);
+          showToast('Данные загружены');
+          closeModal('settingsModal');
+        } catch (err) {
+          console.error(err);
+          showToast('Не удалось загрузить файл резервной копии');
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    // ==================== 11. МУЗЫКА ====================
+    const audioEl = document.getElementById('htmlAudioPlayer');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const muteBtn = document.getElementById('muteBtn');
+    const progressSlider = document.getElementById('musicProgress');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const trackTitleDisplay = document.getElementById('trackTitleDisplay');
+    const audioSourceHint = document.getElementById('audioSourceHint');
+
+    let isPlaying = false;
+    let isMuted = false;
+    let usingCustomAudio = false;
+    let audioCtx = null;
+    let synthInterval = null;
+    let masterGain = null;
+    let noteStep = 0;
+    const chords = [
+      [349.23, 440.0, 523.25, 659.25],
+      [329.63, 392.0, 493.88, 587.33],
+      [293.66, 349.23, 440.0, 523.25],
+      [261.63, 329.63, 392.0, 493.88],
+    ];
+
+    function startGentleSynth() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContextClass();
+        masterGain = audioCtx.createGain();
+        masterGain.gain.value = isMuted ? 0 : parseFloat(volumeSlider.value) * 0.22;
+        masterGain.connect(audioCtx.destination);
+      }
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      if (synthInterval) clearInterval(synthInterval);
+      synthInterval = setInterval(() => {
+        if (!isPlaying || usingCustomAudio) return;
+        const chord = chords[Math.floor(noteStep / 4) % chords.length];
+        const freq = chord[noteStep % chord.length];
+        noteStep++;
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const noteGain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now);
+        noteGain.gain.setValueAtTime(0.0001, now);
+        noteGain.gain.exponentialRampToValueAtTime(0.35, now + 0.08);
+        noteGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8);
+        osc.connect(noteGain);
+        noteGain.connect(masterGain);
+        osc.start(now);
+        osc.stop(now + 1.85);
+        progressSlider.value = ((noteStep % 32) / 32) * 100;
+      }, 620);
+    }
+
+    function stopGentleSynth() {
+      if (synthInterval) {
+        clearInterval(synthInterval);
+        synthInterval = null;
+      }
+    }
+
+    function updatePlayButtonIcon() {
+      const btn = document.getElementById('playPauseBtn');
+      btn.innerHTML = `<i data-lucide="${isPlaying ? 'pause' : 'play'}" class="w-4 h-4 fill-current ${isPlaying ? '' : 'ml-0.5'}"></i>`;
+      lucide.createIcons();
+    }
+
+    playPauseBtn.addEventListener('click', () => {
+      if (usingCustomAudio) {
+        if (audioEl.paused) { audioEl.play(); isPlaying = true; }
+        else { audioEl.pause(); isPlaying = false; }
+      } else {
+        isPlaying = !isPlaying;
+        if (isPlaying) startGentleSynth();
+        else stopGentleSynth();
+      }
+      updatePlayButtonIcon();
+    });
+
+    muteBtn.addEventListener('click', () => {
+      isMuted = !isMuted;
+      audioEl.muted = isMuted;
+      if (masterGain && audioCtx) {
+        masterGain.gain.setValueAtTime(isMuted ? 0 : parseFloat(volumeSlider.value) * 0.22, audioCtx.currentTime);
+      }
+      muteBtn.innerHTML = `<i data-lucide="${isMuted ? 'volume-x' : 'volume-2'}" class="w-4 h-4"></i>`;
+      lucide.createIcons();
+    });
+
+    volumeSlider.addEventListener('input', () => {
+      const vol = parseFloat(volumeSlider.value);
+      audioEl.volume = vol;
+      if (masterGain && audioCtx && !isMuted) masterGain.gain.setValueAtTime(vol * 0.22, audioCtx.currentTime);
+    });
+
+    document.getElementById('customAudioInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      stopGentleSynth();
+      audioEl.src = URL.createObjectURL(file);
+      audioEl.volume = parseFloat(volumeSlider.value);
+      usingCustomAudio = true;
+      trackTitleDisplay.textContent = file.name.replace(/\.[^/.]+$/, '');
+      audioSourceHint.textContent = 'Трек с этого устройства';
+      audioEl.play();
+      isPlaying = true;
+      updatePlayButtonIcon();
+      showToast('Музыка загружена');
+    });
+
+    audioEl.addEventListener('timeupdate', () => {
+      if (usingCustomAudio && audioEl.duration) progressSlider.value = (audioEl.currentTime / audioEl.duration) * 100;
+    });
+    audioEl.addEventListener('ended', () => { isPlaying = false; updatePlayButtonIcon(); });
+    progressSlider.addEventListener('input', () => {
+      if (usingCustomAudio && audioEl.duration) audioEl.currentTime = (progressSlider.value / 100) * audioEl.duration;
+    });
+
+    // ==================== 12. ЛЕПЕСТКИ ====================
+    function initPetalsCanvas() {
+      const canvas = document.getElementById('petalsCanvas');
+      const ctx = canvas.getContext('2d');
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+      const petalCount = Math.min(22, Math.floor(width / 65));
+      const petals = Array.from({ length: petalCount }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: 6 + Math.random() * 7,
+        speedY: 0.35 + Math.random() * 0.55,
+        speedX: -0.3 + Math.random() * 0.6,
+        angle: Math.random() * Math.PI * 2,
+        spin: (Math.random() - 0.5) * 0.015,
+        opacity: 0.25 + Math.random() * 0.35,
+      }));
+      function animatePetals() {
+        ctx.clearRect(0, 0, width, height);
+        petals.forEach((p) => {
+          p.y += p.speedY;
+          p.x += p.speedX + Math.sin(p.angle) * 0.25;
+          p.angle += p.spin;
+          if (p.y > height + 20) { p.y = -15; p.x = Math.random() * width; }
+          if (p.x > width + 20) p.x = -15;
+          if (p.x < -20) p.x = width + 15;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle);
+          ctx.globalAlpha = p.opacity;
+          ctx.beginPath();
+          ctx.moveTo(0, -p.size / 2);
+          ctx.bezierCurveTo(p.size / 2, -p.size / 2, p.size / 2, p.size / 2, 0, p.size);
+          ctx.bezierCurveTo(-p.size / 2, p.size / 2, -p.size / 2, -p.size / 2, 0, -p.size / 2);
+          ctx.fillStyle = '#E9B4C8';
+          ctx.fill();
+          ctx.restore();
+        });
+        requestAnimationFrame(animatePetals);
+      }
+      animatePetals();
+    }
+
+    // ==================== СТАРТ ====================
+    async function boot() {
+      initPetalsCanvas();
+      renderHeroPhoto();
+      renderMemories();
+      renderStory();
+      renderReminders();
+      renderLetters();
+      renderDreams();
+      lucide.createIcons();
+
+      // Пересчитываем «через N дней» после полуночи
+      setInterval(renderReminders, 60 * 60 * 1000);
+
+      if (FIREBASE_CONFIG.apiKey) {
+        try {
+          backend = await createFirebaseBackend();
+          await backend.start(onData);
+          setSyncStatus('cloud');
+        } catch (err) {
+          console.error('Firebase:', err);
+          setSyncStatus('error');
+          showToast('Нет связи с облаком: ' + (err.code || err.message));
+          // Сайт всё равно открываем, но без сохранения
+          backend = {
+            mode: 'error',
+            start: async () => {},
+            put: async () => { throw new Error('нет связи с облаком'); },
+            patch: async () => { throw new Error('нет связи с облаком'); },
+            del: async () => { throw new Error('нет связи с облаком'); },
+            setMeta: async () => { throw new Error('нет связи с облаком'); },
+            setHero: async () => { throw new Error('нет связи с облаком'); },
+          };
+          COLLECTIONS.forEach((c) => onData('col', c, structuredClone(DEFAULT_DOCS[c] || [])));
+          if (!metaLoaded) { metaLoaded = true; finishLoading(); }
+        }
+      } else {
+        backend = createLocalBackend();
+        await backend.start(onData);
+        setSyncStatus('local');
+      }
+
+      // Страховка: не держим экран загрузки вечно
+      setTimeout(() => { if (!metaLoaded) { metaLoaded = true; finishLoading(); } }, 10000);
+    }
+
+    boot();
+  </script>
+</body>
+</html>
