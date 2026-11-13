@@ -2279,6 +2279,13 @@
     });
 
     // ==================== 11. МУЗЫКА ====================
+    // Песня по умолчанию: положи mp3 рядом с index.html под этим именем.
+    // Если файла нет — играет встроенная мелодия.
+    const DEFAULT_TRACK = {
+      src: 'music.mp3',
+      title: 'Ordinary (Wedding Edition)',
+      hint: 'Alex Warren • наша песня',
+    };
     const audioEl = document.getElementById('htmlAudioPlayer');
     const playPauseBtn = document.getElementById('playPauseBtn');
     const muteBtn = document.getElementById('muteBtn');
@@ -2387,6 +2394,27 @@
       updatePlayButtonIcon();
       showToast('Музыка загружена');
     });
+
+    // Подключаем песню по умолчанию
+    if (DEFAULT_TRACK.src) {
+      audioEl.loop = true;
+      audioEl.volume = parseFloat(volumeSlider.value);
+      audioEl.addEventListener('loadedmetadata', () => {
+        if (usingCustomAudio) return;
+        usingCustomAudio = true;
+        trackTitleDisplay.textContent = DEFAULT_TRACK.title;
+        audioSourceHint.textContent = DEFAULT_TRACK.hint;
+        if (isPlaying) { stopGentleSynth(); audioEl.play().catch(() => {}); }
+      }, { once: true });
+      audioEl.addEventListener('error', () => {
+        // Файла нет или не загрузился — остаёмся на встроенной мелодии
+        if (audioEl.getAttribute('src') !== DEFAULT_TRACK.src) return;
+        usingCustomAudio = false;
+        isPlaying = false;
+        updatePlayButtonIcon();
+      });
+      audioEl.src = DEFAULT_TRACK.src;
+    }
 
     audioEl.addEventListener('timeupdate', () => {
       if (usingCustomAudio && audioEl.duration) progressSlider.value = (audioEl.currentTime / audioEl.duration) * 100;
